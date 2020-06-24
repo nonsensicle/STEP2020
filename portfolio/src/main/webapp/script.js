@@ -17,7 +17,16 @@
  */
 function addRandomQuote() {
   const quotes =
-      ['\"I found I could say things with color and shapes that I couldn\'t say any other way...things I had no words for.\"', '\"When you look back at where you have been, it oftens seems as if you have never been there or even as if there were no such place.\"', '\"All colours are the friends of their neighbors, and the lovers of their opposites.\"', '\"We cross our bridges as we come to them and burn them behind us, with nothing to show for our progress except a memory of the smell of smoke, and the presumption that once our eyes watered.\"', '\"Beauty plus pity--that is the closest we can get to a definition of art. Where there is beauty there is pity for the simple reason that beauty must die: beauty always dies, the manner dies with the matter, the world dies with the individual.\"'];
+      ['\"I found I could say things with color and shapes that I couldn\'t say any other \
+      way...things I had no words for.\"', 
+      '\"When you look back at where you have been, it oftens seems as if you have never been \
+      there or even as if there were no such place.\"', 
+      '\"All colours are the friends of their neighbors, and the lovers of their opposites.\"', 
+      '\"We cross our bridges as we come to them and burn them behind us, with nothing to show \
+      for our progress except a memory of the smell of smoke, and the presumption that once our eyes watered.\"', 
+      '\"Beauty plus pity--that is the closest we can get to a definition of art. Where there is beauty there \
+      is pity for the simple reason that beauty must die: beauty always dies, the manner dies with the matter, \
+      the world dies with the individual.\"'];
 
   // Pick a random quote.
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
