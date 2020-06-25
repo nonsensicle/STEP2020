@@ -1,9 +1,122 @@
+/* Site-wide header materials */
+.header {
+  background-color:rgba(0,0,0,0.3);
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  padding-bottom: 20px;
+  overflow: hidden;
+  transition:background 0.5s ease;
+}
+
+.header img {
+  padding: 10px;
+}
+
+.header a {
+  display: block;
+  padding: 10px;
+  float: left;
+  text-align: center;
+  text-decoration: blueviolet;
+}
+
+.header a.logo {
+    padding: 0px;
+    max-width: 22%;
+    min-height: 142px;
+}
+
+
+.header-center {
+  float: center;
+}
+
+.header-right {
+  float: right;
+  text-align: center;
+}
+
+/* Background image on index.html */
+#bg { 
+  background: url(images/bg1.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* Content on About page*/
 #content {
+  background-color:white; 
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  padding: 50px;
+  width: 50%;
+}
+
+/* Content on Art Pages */
+#contentart {
+  background-color:white; 
+  margin-left: 20%;
+  margin-right: auto;
+  padding: 50px;
+  width: 75%;
 }
 
 #greeting-container {
   margin-top: 20px;
+  margin-bottom: 20px
+}
+
+/* Site-wide body color */
+body{
+    background-color: white
+}
+
+/* Image display on Art Gallery pages */
+.image-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-thumbnails img {
+  margin: 5px;
+  max-height: 400px;
+  max-width: 500px;
+}
+
+/* Sidebar materials for Art Gallery */
+.sidebar {
+  position: fixed;
+  top: 100px;
+  background-color:rgba(100, 0, 100, .15);
+  color: white;
+  width: 15%;
+  height: 100%;
+  overflow: hidden;
+  transition:background 0.5s ease;
+}
+
+.sidebar a{
+  display: block;
+  padding: 10px;
+}
+
+.sidebar a.activebutton {
+  display: block;
+  background-color: #ddd;
+  padding: 10px;
+  color: black;
+}
+
+.sidebar a:hover {
+  display: block;
+  background-color: violet;
+  padding: 10px;
+  color: black; 
 }
