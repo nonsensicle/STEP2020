@@ -4,15 +4,18 @@
         <meta charset="UTF-8">
         <title>LEAH RYU: PRINTS</title>
         <link rel="stylesheet" href="style.css">
+        <script src="lightbox.js"></script>
     </head>
     <body>
       <!-- Header -->
       <div class="header">
-        <p><a href="index.html" class="logo"><img src="images/leahheader.svg"></a></p>
-        <p><img src="images/artcs.svg" width="12%"></p>
+        <div class="header-left">
+          <a href="index.html" class="logo"><img src="images/leahheader.svg" width="40%"></a>
+          <img src="images/artcs.svg" width="16%">
+        </div>
         <div class="header-right">
           <a href="about.html">About</a>
-          <a href="prints.html">Art Gallery</a>
+          <a class="activeheader" href="prints.html">Art Gallery</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </div>
@@ -21,7 +24,7 @@
 
       <!-- Sidebar -->
       <div class="sidebar">
-        <a href="#" class="active">Prints</a>
+        <a href="#" class="activebutton">Prints</a>
         <a href="illustrations.html">Illustrations</a>
         <a href="doodles.html">Doodles &amp; Tidbits</a>
       </div>
@@ -30,17 +33,76 @@
       <div id="contentart">
         <h1>GALLERY: PRINTS</h1>
         <div class="image-thumbnails">
-          <a href="images/print1.jpg"><img src="images/print1.jpg"/></a>
-          <a href="images/print2.jpg"><img src="images/print2.jpg"/></a>
-          <a href="images/print3.jpg"><img src="images/print3.jpg"/></a>
-          <a href="images/print4.jpg"><img src="images/print4.jpg"/></a>
-          <a href="images/print5.jpg"><img src="images/print5.jpg"/></a>
-          <a href="images/final1.jpg"><img src="images/final1.jpg"/></a>
-          <a href="images/final3.jpg"><img src="images/final3.jpg"/></a>
-          <a href="images/final4.jpg"><img src="images/final4.jpg"/></a>
-          <a href="images/final2.jpg"><img src="images/final2.jpg"/></a>
-          <a href="images/print6.jpg"><img src="images/print6.jpg"/></a>
+          <img src="images/print1.jpg" onclick="openBox();currentImg(0)"/>
+          <img src="images/print2.jpg" onclick="openBox();currentImg(1)"/>
+          <img src="images/print3.jpg" onclick="openBox();currentImg(2)"/>
+          <img src="images/print4.jpg" onclick="openBox();currentImg(3)"/>
+          <img src="images/print5.jpg" onclick="openBox();currentImg(4)"/>
+          <img src="images/final1.jpg" onclick="openBox();currentImg(5)"/>
+          <img src="images/final3.jpg" onclick="openBox();currentImg(6)"/>
+          <img src="images/final4.jpg" onclick="openBox();currentImg(7)"/>
+          <img src="images/final2.jpg" onclick="openBox();currentImg(8)"/>
+          <img src="images/print6.jpg" onclick="openBox();currentImg(9)"/>
         </div>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="ltbox">
+          <span class="close cursor" onclick="closeBox()">&times;</span>
+          <div class="contentltbox">
+             
+            <!-- Images 1-10 -->
+            <div class="imgs">
+              <img src="images/print1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/print2.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/print3.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/print4.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/print5.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/final1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/final3.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/final4.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/final2.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/print6.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+            </div>
+
+            <!-- Next/prev -->
+            <a class="prev" onclick="slide(-1)">&#10094</a>
+            <a class="next" onclick="slide(1)">&#10095</a>
+
+          </div>
+          <!-- Caption container -->
+          <div id="captioncontainer">
+            <a id="caption"></a>
+          </div>
+
+        </div>
+
         <a href="#top">Back to top of page</a>
       </div>
   </body>

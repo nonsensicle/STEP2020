@@ -4,15 +4,19 @@
         <meta charset="UTF-8">
         <title>LEAH RYU: DOODLES</title>
         <link rel="stylesheet" href="style.css">
+        <script src="lightbox.js"></script>
     </head>
     <body>
      <!-- Header -->
       <div class="header">
-        <p><a href="index.html" class="logo"><img src="images/leahheader.svg"></a></p>
-        <p><img src="images/artcs.svg" width="12%"></p>
+        <p><a href="index.html" class="logo"><img src="images/leahheader.svg"></a>
+        <img src="images/artcs.svg" width="12%"></p>
+        <div class="header-center">
+            <a>GALLERY: DOODLES &amp; TIDBITS</a>
+        </div>
         <div class="header-right">
           <a href="about.html">About</a>
-          <a href="prints.html">Art Gallery</a>
+          <a class="activeheader" href="doods.html">Art Gallery</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </div>
@@ -23,28 +27,105 @@
       <div class="sidebar">
         <a href="prints.html">Prints</a>
         <a href="illustrations.html">Illustrations</a>
-        <a href="#" class="active">Doodles &amp; Tidbits</a>
+        <a href="#" class="activebutton">Doodles &amp; Tidbits</a>
       </div>
 
       <!-- Main content -->
       <div id="contentart">
         <h1>GALLERY: DOODLES &amp; TIDBITS</h1>
         <div class="image-thumbnails">
-            <a href="images/dood1.jpg"><img src="images/dood1.jpg"/></a>
-            <a href="images/dood3.jpg"><img src="images/dood3.jpg"/></a>
-            <a href="images/dood4.jpg"><img src="images/dood4.jpg"/></a>
-            <a href="images/dood6.jpg"><img src="images/dood6.jpg"/></a>
-            <a href="images/dood7.jpg"><img src="images/dood7.jpg"/></a>
-            <a href="images/dood8.jpg"><img src="images/dood8.jpg"/></a>
-            <a href="images/dood9.jpg"><img src="images/dood9.jpg"/></a>
-            <a href="images/dood10.jpg"><img src="images/dood10.jpg"/></a>
-            <a href="images/dood11.jpg"><img src="images/dood11.jpg"/></a>
-            <a href="images/dood12.jpg"><img src="images/dood12.jpg"/></a>
-            <a href="images/dood2.jpeg"><img src="images/dood2.jpeg"/></a>
-            <a href="images/dood5.jpg"><img src="images/dood5.jpg"/></a>
-
+            <img src="images/dood1.jpg" onclick="openBox();currentImg(0)"/>
+            <img src="images/dood3.jpg" onclick="openBox();currentImg(1)"/>
+            <img src="images/dood4.jpg" onclick="openBox();currentImg(2)"/>
+            <img src="images/dood6.jpg" onclick="openBox();currentImg(3)"/>
+            <img src="images/dood7.jpg" onclick="openBox();currentImg(4)"/>
+            <img src="images/dood8.jpg" onclick="openBox();currentImg(5)"/>
+            <img src="images/dood9.jpg" onclick="openBox();currentImg(6)"/>
+            <img src="images/dood10.jpg" onclick="openBox();currentImg(7)"/>
+            <img src="images/dood11.jpg" onclick="openBox();currentImg(8)"/>
+            <img src="images/dood12.jpg" onclick="openBox();currentImg(9)"/>
+            <img src="images/dood2.jpeg" onclick="openBox();currentImg(10)"/>
+            <img src="images/dood5.jpg" onclick="openBox();currentImg(11)"/>
         </div>
       <a href="#top">Back to top of page</a>
-    </div>
+      </div>
+
+      <!-- Lightbox -->
+        <div id="lightbox" class="ltbox">
+          <span class="close cursor" onclick="closeBox()">&times;</span>
+          <div class="contentltbox">
+             
+            <!-- Images 1-10 -->
+            <div class="imgs">
+              <img src="images/dood1.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Doodle inspired by Peggy Gou's \"Starry Night\""/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood3.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Imaginary faces"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood4.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="J.W. Waterhouse ballpoint study, wihle waiting for the Dartmouth Coach"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood6.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Tried out my (then) new Tombow markers"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood7.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Inspired by things I saw at la Galleria Nazionale d'Arte Moderna in Rome"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood8.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Imaginary faces mixed in with some real ones"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood9.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Imaginary faces mixed in with some real ones part 2"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood10.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Finals week, daily vitamins in a drink"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood11.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Another imaginary face"/>
+            </div>
+
+            <div class="imgs">
+              <img src="image/dood12.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Thumbnail sketches"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/dood2.jpeg" style="position: relative; max-width:100%; max-height:100%;" alt="Geometric headspace"/>
+            </div>
+
+            <div class="imgs">
+              <img src="image/dood5.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Thoughts from Berlin"/>
+            </div>
+            
+
+            <!-- Next/prev -->
+            <a class="prev" onclick="slide(-1)">&#10094</a>
+            <a class="next" onclick="slide(1)">&#10095</a>
+
+          </div>
+          <!-- Caption container -->
+          <div id="captioncontainer">
+            <a id="caption"></a>
+          </div>
+
+        </div>
+
   </body>
 </html>
