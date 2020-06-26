@@ -22,7 +22,7 @@ function showImg(n) {
     var captionTxt = document.getElementById("caption");
 
     // Wrap around if at beginning or end
-    if (n > imgs.length) {
+    if (n > imgs.length - 1) {
         whichImg = 0;
     }
     if (n < 0) {

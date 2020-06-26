@@ -70,6 +70,20 @@
   font-family:"Gill Sans", sans-serif;
 }
 
+.places img {
+    position: relative;
+    width: 20%;
+    padding: 20px;
+    float: center;
+}
+
+.places img:hover {
+  transition: 0.3s;
+  transition-timing-function: ease-in;
+  filter: grayscale(100%);
+  transform: scale(1.1);
+}
+
 /* Content on Art Pages */
 #contentart {
   background-color:white; 
@@ -103,19 +117,20 @@ body {
   transition-timing-function: ease-in;
   margin: 7px;
   max-height: 400px;
-  max-width: 560px;
+  min-height: 300px;
+  max-width: 500px;
 }
 
 .image-thumbnails img:hover {
-    filter: grayscale(100%);
-    transform: scale(1.1);
+  filter: grayscale(100%);
+  transform: scale(1.1);
 }
 
 /* Sidebar materials for Art Gallery */
 .sidebar {
   position: fixed;
   margin-top: 5%;
-  background-color: rgba(100, 0, 100, .15);
+  background-color: #500093;
   color: white;
   width: 15%;
   height: 100%;
@@ -232,7 +247,7 @@ body {
 /* Form container materials for contact page */
 .formcontainer {
     border-radius: 5px;
-    background-color: rgba(100, 0, 100, .15);
+    background-color: #500093;
     padding: 10px;
     max-width: 50%;
     align-content: center;
@@ -264,7 +279,6 @@ input[type=submit]:hover {
   display: block;
   padding: 10px;
   align-content: center;
-  float: left;
   font-family: "Gill Sans", sans-serif;
   text-align: center;
   text-decoration: blueviolet;
