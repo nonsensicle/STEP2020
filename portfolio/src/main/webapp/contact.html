@@ -8,8 +8,8 @@
   </head>
   <body>
     <div class="header">
-      <a href="index.html" class="logo"><img src="images/leahheader.svg" width="20%"></a>
-      <img src="images/artcs.svg" width="12%">
+      <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
+      <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
       <div class="header-right">
           <a href="about.html">About</a>
           <a href="prints.html">Art Gallery</a>
@@ -18,15 +18,18 @@
     </div>
 
     <!-- Contact form -->
+    <!-- TODO: back-end mail -->
     <div class="formcontainer">
-      <label for="fname">Name *</label>
-      <input type="text" id="fname" name="first" placeholder="Your name"> <input type="text" id="surname" 
-      name="last" placeholder="Your last name">
-      <label for="email">Email *</label>
-      <input type="email" id="email" name="mail" placeholder="Your email">
-      <label for="msg">Message *</label>
-      <textarea id="subject" name="subject" placeholder="Tell me something.." style="height:200px"></textarea>
-      <input type="submit" value="Submit">
+      <form action="mailto:ryu.leah@gmail.com">
+        <label for="fname">Name *</label> <br></br>
+        <input style="width:40%;" type="text" id="fname" name="first" placeholder="Your name"> <input style="width:40%;" 
+        type="text" id="surname" name="last" placeholder="Your last name"></p> <br></br>
+        <label for="email">Email *</label> <br></br>
+        <input type="text" id="email" name="mail" placeholder="Your email"> <br></br>
+        <label for="msg">Message *</label> <br></br>
+        <textarea id="subject" name="subject" placeholder="Tell me something.." style="height:200px"></textarea><br></br>
+        <input type="submit" value="Submit">
+      </form>
     </div>
 
     <!-- Links to Github, Linkedin, and Instagram -->

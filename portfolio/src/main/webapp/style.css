@@ -1,3 +1,9 @@
+/* Get rid of purple for visited links */
+a:visited { 
+  text-decoration: none; 
+  color: white;
+}
+
 /* Site-wide header materials */
 .header {
   background-color:rgba(0,0,0,0.3);
@@ -6,9 +12,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: auto;
+  height: 13%;
   padding-bottom: 20px;
-  overflow: hidden;
+  overflow: visible;
   transition:background 0.5s ease;
 }
 
@@ -22,7 +28,7 @@
   float: left;
   font-family: "Gill Sans", sans-serif;
   text-align: center;
-  text-decoration: blueviolet;
+  text-decoration: none;
 }
 
 .header a.activeheader {
@@ -30,23 +36,17 @@
     color: black;
 }
 
-.header a.logo {
-  padding: 0px;
-  width: 40%;
-  display: inline-block;
-}
-
-.header-left {
+.header a.clickablelogo {
+  padding: 10px;
   float: left;
-}
-
-.header-center {
-  float: center;
 }
 
 .header-right {
   float: right;
   text-align: center;
+  position: fixed;
+  top: 10%;
+  right: 10px;
 }
 
 /* Background image on index.html */
@@ -64,10 +64,11 @@
   background-color:white; 
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5%;
+  margin-top: 10%;
   padding: 50px;
   width: 50%;
   font-family:"Gill Sans", sans-serif;
+  text-decoration: none;
 }
 
 .places img {
@@ -87,9 +88,9 @@
 /* Content on Art Pages */
 #contentart {
   background-color:white; 
-  margin-left: 20%;
+  margin-left: 18%;
   margin-right: auto;
-  margin-top: 5%;
+  margin-top: 10%;
   padding: 50px;
   width: 75%;
   font-family: "Gill Sans", sans-serif;
@@ -116,9 +117,8 @@ body {
   transition: .4s;
   transition-timing-function: ease-in;
   margin: 7px;
-  max-height: 400px;
-  min-height: 300px;
-  max-width: 500px;
+  height: 400px;
+  width: auto;
 }
 
 .image-thumbnails img:hover {
@@ -129,7 +129,7 @@ body {
 /* Sidebar materials for Art Gallery */
 .sidebar {
   position: fixed;
-  margin-top: 5%;
+  top: 15%;
   background-color: #500093;
   color: white;
   width: 15%;
@@ -142,6 +142,7 @@ body {
   display: block;
   font-family: "Gill Sans", sans-serif;
   padding: 10px;
+  text-decoration: none;
 }
 
 .sidebar a.activebutton {
@@ -177,7 +178,7 @@ body {
 .contentltbox {
   position: relative;
   padding: 0;
-  max-width: 80%;
+  max-width: 75%;
   max-height: 100%;
   margin: auto;
   float: left;
@@ -253,10 +254,11 @@ body {
     align-content: center;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10%;
 }
 
 input[type=text], textarea {
-    width: 50%;
+    width: 80%;
     padding: 10px;
     margin: 10px;
     resize: vertical;
@@ -268,6 +270,7 @@ input[type=submit] {
     padding: 15px;
     color: black;
     cursor: pointer;
+    align-content: center;
 }
 
 input[type=submit]:hover {
@@ -277,15 +280,18 @@ input[type=submit]:hover {
 /* Social media link formatting */
 .socialmedia {
   display: block;
-  padding: 10px;
+  padding: 30px;
   align-content: center;
   font-family: "Gill Sans", sans-serif;
   text-align: center;
-  text-decoration: blueviolet;
+  text-decoration: none;
   margin-left: auto;
   margin-right: auto;
 }
 
+.socialmedia a {
+  padding: 10px;
+}
 
 /* Thomas Hardy CV template http://www.thomashardy.me.uk/free-responsive-html-css3-cv-template */
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
@@ -313,10 +319,12 @@ p {
 }
 
 #cv {
-	width: 100%;
-	max-width: 800px;
 	background: #f3f3f3;
-	margin: 30px auto;
+	margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px;
+    width: 50%;
 }
 
 .mainDetails {

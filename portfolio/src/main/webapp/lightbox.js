@@ -22,7 +22,7 @@ function showImg(n) {
     var captionTxt = document.getElementById("caption");
 
     // Wrap around if at beginning or end
-    if (n > imgs.length - 1) {
+    if (n > (imgs.length - 1)) {
         whichImg = 0;
     }
     if (n < 0) {
@@ -35,10 +35,10 @@ function showImg(n) {
     }
 
     // Display current image 
-    imgs[n].style.display = "block";
+    imgs[whichImg].style.display = "block";
 
     // Change caption to alt text by getting array of images inside the div "imgs"
-    captionTxt.innerHTML = imgs[n].getElementsByTagName('img')[0].alt;
+    captionTxt.innerHTML = imgs[whichImg].getElementsByTagName('img')[0].alt;
 }
 
 // Next/previous (expected input 1 or -1)

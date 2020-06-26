@@ -9,19 +9,15 @@
     <body>
       <!-- Header -->
       <div class="header">
-        <div class="header-left">
-          <a href="index.html" class="logo"><img src="images/leahheader.svg" width="40%"></a>
-          <img src="images/artcs.svg" width="16%">
-        </div>
+        <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
+        <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
         <div class="header-right">
           <a href="about.html">About</a>
           <a class="activeheader" href="prints.html">Art Gallery</a>
-          <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </div>
       </div>
-      <a name="top"></a>
-
+      
       <!-- Sidebar -->
       <div class="sidebar">
         <a href="#" class="activebutton">Prints</a>
@@ -31,7 +27,7 @@
 
       <!-- Main content -->
       <div id="contentart">
-        <h1>GALLERY: PRINTS</h1>
+        <h1 style="font-weight: bold;font-size: 40px;padding:30px;">GALLERY: PRINTS</h1>
         <div class="image-thumbnails">
           <img src="images/print1.jpg" onclick="openBox();currentImg(0)"/>
           <img src="images/print2.jpg" onclick="openBox();currentImg(1)"/>
@@ -97,13 +93,10 @@
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
+          <div class="captioncontainer">
             <a id="caption"></a>
           </div>
-
         </div>
-
-        <a href="#top">Back to top of page</a>
       </div>
   </body>
 </html>
