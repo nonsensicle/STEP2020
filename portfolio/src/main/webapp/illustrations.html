@@ -9,12 +9,11 @@
     <body>
      <!-- Header -->
       <div class="header">
-        <p><a href="index.html" class="logo"><img src="images/leahheader.svg"></a>
-        <img src="images/artcs.svg" width="12%"></p>
+        <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
+        <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
         <div class="header-right">
           <a href="about.html">About</a>
           <a class="activeheader" href="draws.html">Art Gallery</a>
-          <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </div>
       </div>
@@ -29,7 +28,7 @@
 
       <!-- Main content -->
       <div id="contentart">
-        <h1>GALLERY: ILLUSTRATIONS</h1>
+        <h1 style="font-weight: bold;font-size: 40px; padding:30px;">GALLERY: ILLUSTRATIONS</h1>
         <div class="image-thumbnails">
             <img src="images/draw1.jpg" onclick="openBox();currentImg(0)"/>
             <img src="images/draw2.jpg" onclick="openBox();currentImg(1)"/>
@@ -135,12 +134,11 @@
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
+          <div class="captioncontainer">
             <a id="caption"></a>
           </div>
 
         </div>
-      <a href="#top">Back to top of page</a>
     </div>
   </body>
 </html>

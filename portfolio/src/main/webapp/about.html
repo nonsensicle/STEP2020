@@ -9,8 +9,8 @@
   </head>
   <body>
     <div class="header">
-      <a href="index.html" class="logo"><img src="images/leahheader.svg" width="20%"></a>
-      <img src="images/artcs.svg" width="12%">
+      <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
+      <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
       <div class="header-right">
           <a class="activeheader" href="about.html">About</a>
           <a href="prints.html">Art Gallery</a>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div id="content">
-      <img src="images/leah.JPG" alt="A picture of myself in Palermo, Italy." width="500" style="float: left; padding: 20px;"/>
+      <img src="images/leah.JPG" alt="A picture of myself in Palermo, Italy." width="55%" style="float: left; padding: 20px;"/>
       <p>Welcome to my portfolio. My name is Leah Ryu. I'm a Korean American and a rising junior at Dartmouth College majoring 
           in Computer Science and Studio Art. I'm interested in a lot of things--illustration/painting, string instruments, fencing, video games, 
           books (especially cyberpunk), CTF, and more. Ask me about composers, colors, or poetry, games, or art history, 
@@ -34,46 +34,45 @@
           mutually symbiotic questions that I hope will inform my future work and that of artists and engineers everywhere, 
           even if my art isn't always digital and my code isn't always artful.
       </p>
-      <p>My work has been featured in Dartmouth's magazine of art and letters, the Stonefence Review: 
-        <a href="https://www.stonefencereviewmag.com/spring-2019-art/2019/5/23/art-by-leah-ryu">See it here</a></p>
       <p>Click to see some of the images I associate with the places I've lived in:</p>
 
       <!-- Places -->
       <div class="places">
-        <img src="images/korea.svg" onclick="openBox();currentImg(0,0)">
-        <img src="images/hanover.svg" onclick="openBox();currentImg(0,1)">
-        <img src="images/italy.svg" onclick="openBox();currentImg(0,2)">
-        <img src="images/athens.svg" onclick="openBox();currentImg(0,3)">
+        <img src="images/korea.svg" onclick="openBox(0);currentImg(0,0)">
+        <img src="images/hanover.svg" onclick="openBox(1);currentImg(0,1)">
+        <img src="images/italy.svg" onclick="openBox(2);currentImg(0,2)">
+        <img src="images/athens.svg" onclick="openBox(3);currentImg(0,3)">
       </div>
 
       <!-- Lightbox Korea -->
-        <div id="lightbox" class="ltbox">
-          <span class="close cursor" onclick="closeBox()">&times;</span>
+        <div id="lightkor" class="ltbox">
+          <span class="close cursor" onclick="closeBox(0)">&times;</span>
           <div class="contentltbox">
              
             <!-- Images -->
             <div class="korea">
-              <img src="images/print1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/kor1.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="My entire family is from 
+              Korea, and while I've never properly lived there, visiting always awakens a deep pride for the homeland, that superhighway
+              of a country. This is a stand selling ddeok, or rice cakes."/>
             </div>
 
             <div class="korea">
-              <img src="images/print2.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/kor2.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="My mom on a sky walkway 
+              over Seoul as the sun sets."/>
             </div>
 
             <div class="korea">
-              <img src="images/print3.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/kor3.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="A busy street 
+              market. Haggling is a must."/>
             </div>
 
             <div class="korea">
-              <img src="images/print4.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/kor4.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="Sashimi!"/>
             </div>
 
             <div class="korea">
-              <img src="images/print5.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="korea">
-              <img src="images/final1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/kor5.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="The lanterns at the temple 
+              of Gatbawi (seated stone Buddha) on Gwan Peak."/>
             </div>
 
             <!-- Next/prev -->
@@ -82,39 +81,40 @@
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
-            <a id="caption"></a>
+          <div class="captioncontainer">
+            <a id="caption0"></a>
           </div>
         </div>
 
         <!-- Lightbox Hanover -->
-        <div id="lightbox" class="ltbox">
-          <span class="close cursor" onclick="closeBox()">&times;</span>
+        <div id="lighthan" class="ltbox">
+          <span class="close cursor" onclick="closeBox(1)">&times;</span>
           <div class="contentltbox">
              
             <!-- Images -->
             <div class="hanover">
-              <img src="images/print1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/han1.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="A friend and I
+              in front of Dartmouth College's historic bell tower."/>
             </div>
 
             <div class="hanover">
-              <img src="images/print2.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/han2.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="The beautiful and
+              humid greenhouse on the top level of the Life Sciences Center."/>
             </div>
 
             <div class="hanover">
-              <img src="images/print3.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/han3.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="The Visual Arts Center, 
+              where I take all my art classes, at dusk."/>
             </div>
 
             <div class="hanover">
-              <img src="images/print4.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/han4.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="Morning in Pine Park, 
+              which was formed by a receding glacier thousands of years ago."/>
             </div>
 
             <div class="hanover">
-              <img src="images/print5.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="hanover">
-              <img src="images/final1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/han5.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="Fun at the
+              Dartmouth Organic Farm!"/>
             </div>
 
             <!-- Next/prev -->
@@ -123,76 +123,64 @@
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
-            <a id="caption"></a>
+          <div class="captioncontainer">
+            <a id="caption1"></a>
           </div>
         </div>
 
         <!-- Lightbox Italy -->
-        <div id="lightbox" class="ltbox">
-          <span class="close cursor" onclick="closeBox()">&times;</span>
+        <div id="lightit" class="ltbox">
+          <span class="close cursor" onclick="closeBox(2)">&times;</span>
           <div class="contentltbox">
              
             <!-- Images -->
             <div class="italy">
-              <img src="images/print1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/italy1.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="In the 
+              summer of 2019, I had the opportunity to study abroad in Rome and learn Italian. This is a picture of the 
+              countryside of Lazio, in a hillside hamlet called Orvinio."/>
             </div>
 
             <div class="italy">
-              <img src="images/print2.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/italy2.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="My view 
+              of Positano after a 7 mile hike from Bomerano on the Path of the Gods."/>
             </div>
 
             <div class="italy">
-              <img src="images/print3.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/italy3.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="Weekly 
+              flea market under my apartment building in Trastevere, viewed from our seventh-floor balcony."/>
             </div>
 
             <div class="italy">
-              <img src="images/print4.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="italy">
-              <img src="images/print5.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="italy">
-              <img src="images/final1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/italy4.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="Street 
+              art in the highly graffitied neighborhood of Testaccio."/>
             </div>
 
             <!-- Next/prev -->
-            <a class="prev" onclick="slideMod(-1, 2)">&#10094</a>
-            <a class="next" onclick="slideMod(1, 2)">&#10095</a>
+            <a class="prev" onclick="slideMod(-1,2)">&#10094</a>
+            <a class="next" onclick="slideMod(1,2)">&#10095</a>
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
-            <a id="caption"></a>
+          <div class="captioncontainer">
+            <a id="caption2"></a>
           </div>
         </div>
 
         <!-- Lightbox Athens -->
-        <div id="lightbox" class="ltbox">
-          <span class="close cursor" onclick="closeBox()">&times;</span>
+        <div id="lightat" class="ltbox">
+          <span class="close cursor" onclick="closeBox(3)">&times;</span>
           <div class="contentltbox">
              
             <!-- Images -->
             <div class="athens">
-              <img src="images/print2.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/athens1.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="Being at home 
+              invariably brings to mind memories the childhood I spent there -- the dreams I had, the books I read, and the cubbies
+              my cat scratched up. I may always have wanted to leave Athens, but it is definitely the fount from which I spring."/>
             </div>
 
             <div class="athens">
-              <img src="images/print3.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="athens">
-              <img src="images/print4.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="athens">
-              <img src="images/print5.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
-            </div>
-
-            <div class="athens">
-              <img src="images/final1.jpg" style="position: relative; max-width:100%; max-height:100%;" alt="Untitled, monoprint, 2020"/>
+              <img src="images/places/athens2.JPG" style="position: relative; max-width:100%; max-height:100%;" alt="The cat in 
+              question."/>
             </div>
 
             <!-- Next/prev -->
@@ -201,8 +189,8 @@
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
-            <a id="caption"></a>
+          <div class="captioncontainer">
+            <a id="caption3"></a>
           </div>
         </div>
 
@@ -263,6 +251,12 @@
 			  <p>• Leading students enrolled in COSC01 in weekly drill sessions <br>
                 • Helping peer understand the principles of programming in Python <br>
                 • Grading coding assignments </p>
+			</article>
+
+            <article>
+			  <h2>Sophomore Research Scholar at Tiltfactor</h2>
+			  <p class="subDetails">March 2020 - June 2020</p>
+			  <p>• Extensively modifying a JavaScript/HTML-based drawing machine inspired by the work of Sol LeWitt.</p>
 			</article>
 				
 			<article>

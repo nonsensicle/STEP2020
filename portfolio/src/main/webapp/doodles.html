@@ -9,15 +9,11 @@
     <body>
      <!-- Header -->
       <div class="header">
-        <p><a href="index.html" class="logo"><img src="images/leahheader.svg"></a>
-        <img src="images/artcs.svg" width="12%"></p>
-        <div class="header-center">
-            <a>GALLERY: DOODLES &amp; TIDBITS</a>
-        </div>
+        <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
+        <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
         <div class="header-right">
           <a href="about.html">About</a>
           <a class="activeheader" href="doods.html">Art Gallery</a>
-          <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </div>
       </div>
@@ -32,7 +28,7 @@
 
       <!-- Main content -->
       <div id="contentart">
-        <h1>GALLERY: DOODLES &amp; TIDBITS</h1>
+        <h1 style="font-weight:bold; font-size:40px; padding:30px;">GALLERY: DOODLES &amp; TIDBITS</h1>
         <div class="image-thumbnails">
             <img src="images/dood1.jpg" onclick="openBox();currentImg(0)"/>
             <img src="images/dood3.jpg" onclick="openBox();currentImg(1)"/>
@@ -47,7 +43,6 @@
             <img src="images/dood2.jpeg" onclick="openBox();currentImg(10)"/>
             <img src="images/dood5.jpg" onclick="openBox();currentImg(11)"/>
         </div>
-      <a href="#top">Back to top of page</a>
       </div>
 
       <!-- Lightbox -->
@@ -120,11 +115,10 @@
 
           </div>
           <!-- Caption container -->
-          <div id="captioncontainer">
+          <div class="captioncontainer">
             <a id="caption"></a>
           </div>
 
         </div>
-
   </body>
 </html>
