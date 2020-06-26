@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Adds a random quote to the page.
+ * Adds a random quote to the about page (about.html).
  */
 function addRandomQuote() {
   const quotes =
