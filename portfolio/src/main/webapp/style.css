@@ -99,9 +99,16 @@ body {
 }
 
 .image-thumbnails img {
-  margin: 5px;
+  transition: .4s;
+  transition-timing-function: ease-in;
+  margin: 7px;
   max-height: 400px;
-  max-width: 500px;
+  max-width: 560px;
+}
+
+.image-thumbnails img:hover {
+    filter: grayscale(100%);
+    transform: scale(1.1);
 }
 
 /* Sidebar materials for Art Gallery */
@@ -136,12 +143,101 @@ body {
   color: black; 
 }
 
+/* Lightbox materials for art gallery pages */
+.ltbox {
+  display: none; /* Default: should not show */
+  position: fixed;
+  z-index: 1;    /* Float on top */
+  margin: 100px;
+  padding: 40px;
+  left: 0;
+  top: 0;
+  width: 75%;
+  height: 75%;
+  overflow: auto;
+  background-color: white;
+  align-content: center;
+}
+
+.contentltbox {
+  position: relative;
+  padding: 0;
+  max-width: 80%;
+  max-height: 100%;
+  margin: auto;
+  float: left;
+}
+
+.contentltbox a {
+  float: right;
+  margin: auto;
+}
+
+.imgs {
+    display: none; /* Default: images do not show */
+}
+
+.close {
+    position: absolute;
+    color: black;
+    top: 10px;
+    right: 10px;
+    font-size: 45px;
+}
+
+.close:hover {
+    color: #6e35b8;
+    cursor: pointer;
+}
+
+.captioncontainer {
+  text-align: center;
+  background-color: white;
+  padding: 20px 20px;
+  color: black;
+  max-width: 20%;
+  float: right;
+}
+
+/* Next & previous */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position next arrow to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+
 /* Form container materials for contact page */
 .formcontainer {
     border-radius: 5px;
     background-color: rgba(100, 0, 100, .15);
     padding: 10px;
     max-width: 50%;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 input[type=text], textarea {
@@ -167,10 +263,13 @@ input[type=submit]:hover {
 .socialmedia {
   display: block;
   padding: 10px;
+  align-content: center;
   float: left;
   font-family: "Gill Sans", sans-serif;
   text-align: center;
   text-decoration: blueviolet;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -200,7 +299,7 @@ p {
 }
 
 #cv {
-	width: 90%;
+	width: 100%;
 	max-width: 800px;
 	background: #f3f3f3;
 	margin: 30px auto;

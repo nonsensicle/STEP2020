@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>LEAH RYU: ILLUSTRATIONS</title>
         <link rel="stylesheet" href="style.css">
+        <script src="lightbox.js"></script>
     </head>
     <body>
      <!-- Header -->
@@ -12,7 +13,7 @@
         <img src="images/artcs.svg" width="12%"></p>
         <div class="header-right">
           <a href="about.html">About</a>
-          <a class="activeheader" href="prints.html">Art Gallery</a>
+          <a class="activeheader" href="draws.html">Art Gallery</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </div>
@@ -30,21 +31,114 @@
       <div id="contentart">
         <h1>GALLERY: ILLUSTRATIONS</h1>
         <div class="image-thumbnails">
-            <a href="images/draw1.jpg"><img src="images/draw1.jpg"/></a>
-            <a href="images/draw2.jpg"><img src="images/draw2.jpg"/></a>
-            <a href="images/draw3.jpg"><img src="images/draw3.JPG"/></a>
-            <a href="images/draw4.jpg"><img src="images/draw4.jpg"/></a>
-            <a href="images/draw5.jpg"><img src="images/draw5.jpg"/></a>
-            <a href="images/draw6.jpg"><img src="images/draw6.jpg"/></a>
-            <a href="images/draw7.jpg"><img src="images/draw7.jpg"/></a>
-            <a href="images/draw8.jpg"><img src="images/draw8.jpg"/></a>
-            <a href="images/draw9.jpg"><img src="images/draw9.jpg"/></a>
-            <a href="images/draw10.jpg"><img src="images/draw10.jpg"/></a>
-            <a href="images/draw11.jpg"><img src="images/draw11.jpg"/></a>
-            <a href="images/draw12.jpg"><img src="images/draw12.jpg"/></a>
-            <a href="images/draw13.jpg"><img src="images/draw13.jpg"/></a>
-            <a href="images/draw14.jpg"><img src="images/draw14.jpg"/></a>
-            <a href="images/draw15.jpg"><img src="images/draw15.jpg"/></a>
+            <img src="images/draw1.jpg" onclick="openBox();currentImg(0)"/>
+            <img src="images/draw2.jpg" onclick="openBox();currentImg(1)"/>
+            <img src="images/draw3.JPG" onclick="openBox();currentImg(2)"/>
+            <img src="images/draw4.jpg" onclick="openBox();currentImg(3)"/>
+            <img src="images/draw5.jpg" onclick="openBox();currentImg(4)"/>
+            <img src="images/draw6.jpg" onclick="openBox();currentImg(5)"/>
+            <img src="images/draw7.jpg" onclick="openBox();currentImg(6)"/>
+            <img src="images/draw8.jpg" onclick="openBox();currentImg(7)"/>
+            <img src="images/draw9.jpg" onclick="openBox();currentImg(8)"/>
+            <img src="images/draw10.jpg" onclick="openBox();currentImg(9)"/>
+            <img src="images/draw11.jpg" onclick="openBox();currentImg(10)"/>
+            <img src="images/draw12.jpg" onclick="openBox();currentImg(11)"/>
+            <img src="images/draw13.jpg" onclick="openBox();currentImg(12)"/>
+            <img src="images/draw14.jpg" onclick="openBox();currentImg(13)"/>
+            <img src="images/draw15.jpg" onclick="openBox();currentImg(14)"/>
+        </div>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="ltbox">
+          <span class="close cursor" onclick="closeBox()">&times;</span>
+          <div class="contentltbox">
+             
+            <!-- Images 1-15 -->
+            <div class="imgs">
+              <img src="images/draw1.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Anais\", graphite & colored pencil, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw2.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Ava\", graphite, india ink & charcoal, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw3.JPG" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Michelle\", graphite, charcoal & oil pastel, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw4.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Clay\", charcoal & oil pastel, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw5.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Valentina\", graphite & colored pencil, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw6.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"visions & indecision\", graphite, 2018"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw7.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Untitled, graphite, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw8.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Untitled, graphite, construction paper & plastic filament, 2020"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw9.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"CREATIVITY\", graphite, 2017"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw10.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"FLESH::ECSTASY\", graphite, 2017"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw11.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"ANIMAUS\", graphite,2017"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw12.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"LOVE AT FIRST SURVEILLANCE\", graphite, 2017"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw13.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="Untitled, ballpoint pen, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw14.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Darren\", graphite, india ink & charcoal, 2019"/>
+            </div>
+
+            <div class="imgs">
+              <img src="images/draw15.jpg" style="position: relative; max-width:100%; max-height:100%;" 
+              alt="\"Biyeshi\", ballpoint pen, 2019"/>
+            </div>
+
+            <!-- Next/prev -->
+            <a class="prev" onclick="slide(-1)">&#10094</a>
+            <a class="next" onclick="slide(1)">&#10095</a>
+
+          </div>
+          <!-- Caption container -->
+          <div id="captioncontainer">
+            <a id="caption"></a>
+          </div>
+
         </div>
       <a href="#top">Back to top of page</a>
     </div>
