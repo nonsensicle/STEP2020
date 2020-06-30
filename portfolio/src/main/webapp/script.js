@@ -46,3 +46,53 @@ function addRandomQuote() {
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
+
+/* 
+ * Add random quote to the about page using fetch().
+ */ 
+function addMessageWithFetch() {
+    console.log("Fetching a simple, hard-coded message.")
+
+    // Make a request to the URL at /data; returns a promise in response
+    const promise = fetch("/data");
+
+    // Then, pass the promise to handleResponse()
+    promise.then(handleResponse);
+}
+
+/*
+ * Converts the promise to text and passes result to addMessageToDOM().
+ */
+function handleResponse(promise) {
+    console.log("Handling the promise.");
+
+    // The promise is a stream, not a string; here, we convert
+    const message = promise.text();
+    message.then(addMessageToDOM);
+}
+
+/*
+ * Add the text from the promise to the message container in about.html.
+ */
+ function addMessageToDOM(msg) {
+    console.log("Setting message on about page.");
+
+    // Find the appropriate container in the document and display message
+    const container = document.getElementById("data-container");
+    container.innerText = msg;
+}
+
+/*
+ * Practice with using arrow functions; should work exactly the same way as past 3 functions together
+ */
+function addMessageUsingArrowFunctions() {
+    console.log("Setting message using arrow functions.");
+
+    /* Promise chain: first, JS makes a request to the /data URL.
+    The resulting promise is then converted to text. That text value is then 
+    returned/passed as a parameter to an anonymous func that finds data 
+    container in the doc and sets the message.
+    */
+    fetch("/data").then(promise => promise.text()).then((msg) => 
+    document.getElementById("data-container").innerText = msg);
+}
