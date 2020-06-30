@@ -19,14 +19,43 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("There is no secret");
+    // For now, hard code messages in json
+    ArrayList<String> jsonData = new ArrayList<String>();
+    jsonData.add("Message 1");
+    jsonData.add("Message 2");
+    jsonData.add("Message 3");
+
+    String jsonString = convertToJson(jsonData);
+
+    response.setContentType("application/json;");
+    response.getWriter().println(jsonString);
+  }
+
+  /*
+   * Manually build a JSON string upon request (doGet())
+   */ 
+  private String convertToJson(ArrayList<String> data) {
+      String json = "{";
+
+      // Loop through the messages and add each one under the key "message" + "i"
+      for (int i = 0; i < data.size(); i++) {
+          json += "\"" + "message" + i + "\": ";
+          json += "\"" + data.get(i) + "\"";
+
+          // If not on the last message, add a comma for proper JSON parsing
+          if (i != data.size() - 1) {
+              json += ", ";
+          }
+      }
+      json += "}";
+
+      return json;
   }
 }

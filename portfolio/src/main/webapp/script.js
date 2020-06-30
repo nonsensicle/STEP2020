@@ -96,3 +96,33 @@ function addMessageUsingArrowFunctions() {
     fetch("/data").then(promise => promise.text()).then((msg) => 
     document.getElementById("data-container").innerText = msg);
 }
+
+/*
+ * Week 3 Step 3: Fetch JSON
+ */
+function addCommentsUsingArrowFunctions() {
+    console.log("Setting message using arrow functions.");
+
+    /* Promise chain: first, JS makes a request to the /data URL.
+    The resulting promise is then converted to JSON. That JSON value is then 
+    returned/passed as a parameter to an anonymous func that finds data 
+    container in the doc and sets the message.
+    */
+    fetch("/data").then(promise => promise.json()).then((msgs) => {
+        const displayList = document.getElementById("comments-container");
+        displayList.innerHTML = '';
+        displayList.appendChild(
+            createListElement("Message 1: "+ msgs.message0));
+        displayList.appendChild(
+            createListElement("Message 2: "+ msgs.message1));
+        displayList.appendChild(
+            createListElement("Message 3: "+ msgs.message2));
+    });
+}
+
+/** Creates an <li> element containing text. (From examples/server-stats) */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

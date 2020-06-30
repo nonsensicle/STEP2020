@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="addCommentsUsingArrowFunctions()">
     <div class="header">
       <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
       <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
@@ -38,6 +38,10 @@
         <a href="https://www.linkedin.com/in/leah-ryu">LinkedIn</a>
         <a href="https://www.instagram.com/nonsensickle/?hl=en">Instagram</a>
         <a href="https://www.facebook.com/leah.ryu">Facebook</a>
+    </div>
+
+    <div style="color: white;">
+        <ul id="comments-container"></ul>
     </div>
   </body>
 </html>
