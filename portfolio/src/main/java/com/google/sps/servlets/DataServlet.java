@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // For now, hard code messages in json
+    // For now, hard code messages in json.
     ArrayList<String> jsonData = new ArrayList<String>();
     jsonData.add("Message 1");
     jsonData.add("Message 2");
@@ -39,23 +39,24 @@ public class DataServlet extends HttpServlet {
   }
 
   /*
-   * Manually build a JSON string upon request (doGet())
+   * Manually build a JSON string upon request (doGet()).
    */ 
   private String convertToJson(ArrayList<String> data) {
-      String json = "{";
+      StringBuilder json = new StringBuilder();
+      json.append("{");
 
-      // Loop through the messages and add each one under the key "message" + "i"
+      // Loop through the messages and add each one under the key "message" + "i".
       for (int i = 0; i < data.size(); i++) {
-          json += "\"" + "message" + i + "\": ";
-          json += "\"" + data.get(i) + "\"";
+          json.append("\"" + "message" + i + "\": ");
+          json.append("\"" + data.get(i) + "\"");
 
-          // If not on the last message, add a comma for proper JSON parsing
+          // If not on the last message, add a comma for proper JSON parsing.
           if (i != data.size() - 1) {
-              json += ", ";
+              json.append(", ");
           }
       }
-      json += "}";
+      json.append("}");
 
-      return json;
+      return json.toString();
   }
 }

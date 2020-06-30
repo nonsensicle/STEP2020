@@ -53,7 +53,7 @@ function addRandomQuote() {
 function addMessageWithFetch() {
     console.log("Fetching a simple, hard-coded message.")
 
-    // Make a request to the URL at /data; returns a promise in response
+    // Make a request to the URL at /data; returns a promise in response.
     const promise = fetch("/data");
 
     // Then, pass the promise to handleResponse()
@@ -66,7 +66,7 @@ function addMessageWithFetch() {
 function handleResponse(promise) {
     console.log("Handling the promise.");
 
-    // The promise is a stream, not a string; here, we convert
+    // The promise is a stream, not a string; here, we convert.
     const message = promise.text();
     message.then(addMessageToDOM);
 }
@@ -77,13 +77,13 @@ function handleResponse(promise) {
  function addMessageToDOM(msg) {
     console.log("Setting message on about page.");
 
-    // Find the appropriate container in the document and display message
+    // Find the appropriate container in the document and display message.
     const container = document.getElementById("data-container");
     container.innerText = msg;
 }
 
 /*
- * Practice with using arrow functions; should work exactly the same way as past 3 functions together
+ * Practice with using arrow functions; should work exactly the same way as past 3 functions together.
  */
 function addMessageUsingArrowFunctions() {
     console.log("Setting message using arrow functions.");
@@ -98,7 +98,7 @@ function addMessageUsingArrowFunctions() {
 }
 
 /*
- * Week 3 Step 3: Fetch JSON
+ * Week 3 Step 3: Fetch JSON.
  */
 function addCommentsUsingArrowFunctions() {
     console.log("Setting message using arrow functions.");
@@ -120,7 +120,7 @@ function addCommentsUsingArrowFunctions() {
     });
 }
 
-/** Creates an <li> element containing text. (From examples/server-stats) */
+/** Creates an <li> element containing text. (From examples/server-stats). */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
