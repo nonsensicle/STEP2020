@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="addCommentsUsingArrowFunctions()">
+  <body onload="getStoredComments()">
     <div class="header">
       <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
       <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
@@ -16,18 +16,22 @@
           <a class="activeheader" href="contact.html">Contact</a>
       </div>
     </div>
-
+    
+    <div class="title-contact" style="margin-top:10%;">
+        <h1>LEAVE A COMMENT</h1>
+    </div>
+    
     <!-- Contact form -->
     <!-- TODO: back-end mail -->
     <div class="formcontainer">
-      <form action="mailto:ryu.leah@gmail.com">
-        <label for="fname">Name *</label> <br></br>
+      <form action="/data" method="POST">
+        <label for="fname">Name</label> <br>
         <input style="width:40%;" type="text" id="fname" name="first" placeholder="Your name"> <input style="width:40%;" 
-        type="text" id="surname" name="last" placeholder="Your last name"></p> <br></br>
-        <label for="email">Email *</label> <br></br>
-        <input type="text" id="email" name="mail" placeholder="Your email"> <br></br>
-        <label for="msg">Message *</label> <br></br>
-        <textarea id="subject" name="subject" placeholder="Tell me something.." style="height:200px"></textarea><br></br>
+        type="text" id="surname" name="last" placeholder="Your last name"></p> <br>
+        <label for="email">Email</label> <br>
+        <input type="text" id="email" name="mail" placeholder="Your email"> <br>
+        <label for="msg">Message *</label> <br>
+        <textarea id="subject" name="subject" placeholder="Tell me something.." style="height:200px"></textarea><br>
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -40,8 +44,11 @@
         <a href="https://www.facebook.com/leah.ryu">Facebook</a>
     </div>
 
-    <div style="color: white;">
-        <ul id="comments-container"></ul>
+    <div class="title-contact">
+        <h2>COMMENTS:</h2>
+    </div>
+    <div id="comments-container" class="comment" style="color: white;">
+        <!--<ul id="comments-container"></ul>-->
     </div>
   </body>
 </html>

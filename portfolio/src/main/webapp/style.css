@@ -255,7 +255,7 @@ body {
     align-content: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
+    color: white;
 }
 
 input[type=text], textarea {
@@ -264,6 +264,7 @@ input[type=text], textarea {
     margin: 10px;
     resize: vertical;
     box-sizing: border-box;
+    font-family: "Gills Sans", sans-serif;
 } 
 
 input[type=submit] {
@@ -292,6 +293,29 @@ input[type=submit]:hover {
 
 .socialmedia a {
   padding: 10px;
+}
+
+/* Other content on contact page*/
+.title-contact {
+  margin: auto;
+  padding: 50px;
+  width: 50%;
+  font-family:"Gill Sans", sans-serif;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.comment {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  padding: 50px;
+  width: 50%;
+  font-family:"Gill Sans", sans-serif;
+  text-decoration: none;
+  color: white;
 }
 
 /* Thomas Hardy CV template http://www.thomashardy.me.uk/free-responsive-html-css3-cv-template */
