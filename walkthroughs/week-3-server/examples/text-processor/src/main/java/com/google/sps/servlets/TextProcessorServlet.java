@@ -28,6 +28,7 @@ public final class TextProcessorServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
+    // The last parameter provides a default value if none is given. 
     String text = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     boolean sort = Boolean.parseBoolean(getParameter(request, "sort", "false"));
@@ -46,6 +47,7 @@ public final class TextProcessorServlet extends HttpServlet {
     }
 
     // Respond with the result.
+    // response.sendRedirect("yourURL") redirects to another URL.
     response.setContentType("text/html;");
     response.getWriter().println(Arrays.toString(words));
   }

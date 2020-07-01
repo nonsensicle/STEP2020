@@ -16,6 +16,7 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function getServerStats() {
+  // sends a request to /my-data-url and parses the response as JSON
   fetch('/server-stats').then(response => response.json()).then((stats) => {
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
