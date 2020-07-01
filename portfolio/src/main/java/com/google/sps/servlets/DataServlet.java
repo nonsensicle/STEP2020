@@ -17,36 +17,67 @@ package com.google.sps.servlets;
 import com.google.sps.data.Comment;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
- 
-  // Holds all the comments. 
-  private ArrayList<Comment> comments = new ArrayList<Comment>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Query for Comment Entities in this instance of Datastore.
+    Query query = new Query("Comment").addSort("date", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    
+    // Loop through found Comment Entities and add then to an arraylist of comments.
+    ArrayList<Comment> comments = new ArrayList<Comment>();
+    for (Entity entity: results.asIterable()) {
+      long id = entity.getKey().getId();
+      String fname = (String) entity.getProperty("fname");
+      String surname = (String) entity.getProperty("surname");
+      String email = (String) entity.getProperty("email");
+      Date date = (Date) entity.getProperty("date");
+      String message = (String) entity.getProperty("message");
+
+      Comment comment = new Comment(fname, surname, email, date, message, id);
+      comments.add(comment);
+    }
+
     String jsonString = new Gson().toJson(comments);  // Gson method takes private vars in each comment
     response.setContentType("application/json;");
     response.getWriter().println(jsonString);
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
-    // Get HTML form input and make a Comment object with the data.
+    // Get HTML form input and make a Comment Entity with the data.
     String fname = request.getParameter("first");
     String surname = request.getParameter("last");
     String email = request.getParameter("mail");
     String subject = request.getParameter("subject");
-    Comment currComment = new Comment(fname, surname, email, subject);
 
-    comments.add(currComment);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("fname", fname);
+    commentEntity.setProperty("surname", surname);
+    commentEntity.setProperty("email", email);
+    commentEntity.setProperty("date", new Date());
+    commentEntity.setProperty("message", subject);
+
+    // Make an instance of DatastoreService and put comment entity in.
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
 
     // Redirect back to the HTML page.
     response.sendRedirect("/contact.html");

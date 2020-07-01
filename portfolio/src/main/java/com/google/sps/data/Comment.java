@@ -26,12 +26,15 @@ public class Comment {
   private Date date;
   @Expose
   private String message;
+  @Expose
+  private final long id;  // Unique ID number for each entity from Datastore.
 
-  public Comment(String first, String last, String mail, String msg) {
+  public Comment(String first, String last, String mail, Date dt, String msg, long idNum) {
     fname = first;
     surname = last;
     email = mail;
-    date = new Date();
+    date = dt;
     message = msg;
+    id = idNum;
   }
 }
