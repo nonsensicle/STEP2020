@@ -29,12 +29,12 @@ public class Comment {
   @Expose
   private final long id;  // Unique ID number for each entity from Datastore.
 
-  public Comment(String first, String last, String mail, Date dt, String msg, long idNum) {
-    fname = first;
-    surname = last;
-    email = mail;
-    date = dt;
-    message = msg;
-    id = idNum;
+  public Comment(String fname, String surname, String email, Date date, String message, long id) {
+    this.fname = fname;
+    this.surname = surname;
+    this.email = email;
+    this.date = date;
+    this.message = message;
+    this.id = id;
   }
 }

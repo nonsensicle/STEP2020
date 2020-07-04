@@ -16,7 +16,14 @@
  * Fetches stored comments from the server and display in the about UI.
  */
 function getStoredComments() {
-    fetch("/data").then(promise => promise.json()).then((comments) => {
+    // Make sure the user-selected number of comments is returned.
+    const numComm = document.getElementById("numcom");
+    urlString = "/data?num-comments=" + numComm.value;
+    if (numComm.value == null) {
+        urlString = "/data";
+    }
+
+    fetch(urlString).then(promise => promise.json()).then((comments) => {
         const displayList = document.getElementById("comments-container");
 
         // Building the displayed list of comments by iterating through the JSON object,
@@ -33,6 +40,11 @@ function getStoredComments() {
             }
         }
     });
+}
+
+/** Deletes all the stored comments from Datastore.*/
+function deleteAllComments() {
+  fetch("/delete-data", {method:POST}).then(getStoredComments());
 }
 
 /** Creates a <div> element containing a comment. */

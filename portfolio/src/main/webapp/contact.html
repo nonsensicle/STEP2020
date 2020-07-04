@@ -11,9 +11,9 @@
       <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
       <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
       <div class="header-right">
-          <a href="about.html">About</a>
-          <a href="prints.html">Art Gallery</a>
-          <a class="activeheader" href="contact.html">Contact</a>
+        <a href="about.html">About</a>
+        <a href="prints.html">Art Gallery</a>
+        <a class="activeheader" href="contact.html">Contact</a>
       </div>
     </div>
     
@@ -26,8 +26,8 @@
     <div class="formcontainer">
       <form action="/data" method="POST">
         <label for="fname">Name</label> <br>
-        <input style="width:40%;" type="text" id="fname" name="first" placeholder="Your name"> <input style="width:40%;" 
-        type="text" id="surname" name="last" placeholder="Your last name"></p> <br>
+        <input style="width:40%;" type="text" id="fname" name="first" placeholder="Your name"> 
+        <input style="width:40%;" type="text" id="surname" name="last" placeholder="Your last name"></p> <br>
         <label for="email">Email</label> <br>
         <input type="text" id="email" name="mail" placeholder="Your email"> <br>
         <label for="msg">Message *</label> <br>
@@ -38,17 +38,24 @@
 
     <!-- Links to Github, Linkedin, and Instagram -->
     <div class="socialmedia">
-        <a href="https://github.com/nonsensicle">Github</a>
-        <a href="https://www.linkedin.com/in/leah-ryu">LinkedIn</a>
-        <a href="https://www.instagram.com/nonsensickle/?hl=en">Instagram</a>
-        <a href="https://www.facebook.com/leah.ryu">Facebook</a>
+      <a href="https://github.com/nonsensicle">Github</a>
+      <a href="https://www.linkedin.com/in/leah-ryu">LinkedIn</a>
+      <a href="https://www.instagram.com/nonsensickle/?hl=en">Instagram</a>
+      <a href="https://www.facebook.com/leah.ryu">Facebook</a>
     </div>
 
     <div class="title-contact">
-        <h2>COMMENTS:</h2>
+      <h2style="float:left;">COMMENTS:</h2>
+      <p style="float:right; font-weight:normal; font-size: 20px;">Number of comments to display: 
+      <select name="num-comments" id="numcom" value="10" onchange="getStoredComments()">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select></p>
     </div>
-    <div id="comments-container" class="comment" style="color: white;">
-        <!--<ul id="comments-container"></ul>-->
-    </div>
+
+    <div id="comments-container" class="comment" style="color: white;"></div>
+    <button class="title-contact" onclick="deleteAllComments()">Delete All Comments</button>
   </body>
 </html>
