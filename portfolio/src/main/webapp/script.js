@@ -44,7 +44,7 @@ function getStoredComments() {
 
 /** Deletes all the stored comments from Datastore.*/
 function deleteAllComments() {
-  fetch("/delete-data", {method:POST}).then(getStoredComments());
+  fetch("/delete-data", {method:'POST'}).then(promise => getStoredComments());
 }
 
 /** Creates a <div> element containing a comment. */
