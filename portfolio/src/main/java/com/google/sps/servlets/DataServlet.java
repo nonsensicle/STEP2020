@@ -42,6 +42,7 @@ public class DataServlet extends HttpServlet {
   private final String DATE = "date";
   private final String MESSAGE = "message";
   private final int DEFAULT_NUM_COMMENTS = 10;
+  private final int MAX_COMMENTS = 50;
 
   // For logs.
   private final Logger logger = Logger.getLogger(DataServlet.class.getName());
@@ -58,17 +59,17 @@ public class DataServlet extends HttpServlet {
     int maxComments = getNumComments(request);
     if (maxComments == -1) {
       response.setContentType("text/html");
-      response.getWriter().println("Please enter an integer in range.");
+      response.getWriter().println("Please enter an integer in the range 1 - " + MAX_COMMENTS + ".");
       return;
     }
 
     // Loop through found Comment Entities and add then to an arraylist of comments.
     // Limit amount of comments displayed to user's choice.
     ArrayList<Comment> comments = new ArrayList<Comment>();
-    int counter = 0;
+    int commentCounter = 0;
     for (Entity entity: results.asIterable()) {
-      if (counter < maxComments) {
-        counter ++;
+      if (commentCounter < maxComments) {
+        commentCounter ++;
         long id = entity.getKey().getId();
         String fname = (String) entity.getProperty(FNAME);
         String surname = (String) entity.getProperty(SURNAME);
@@ -124,6 +125,11 @@ public class DataServlet extends HttpServlet {
     catch (NumberFormatException e) {
       logger.warning("Not a valid integer.");
       return DEFAULT_NUM_COMMENTS;
+    }
+
+    // If int out of range (negative or greater than max) return -1.
+    if (numComments > MAX_COMMENTS || numComments < 0) {
+      return -1;
     }
 
     return numComments;
