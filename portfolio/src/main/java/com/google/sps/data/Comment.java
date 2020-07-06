@@ -37,4 +37,27 @@ public class Comment {
     this.message = message;
     this.id = id;
   }
+  
+  // Getters and setters.
+  public String getFname() {return this.fname;}
+
+  public String getSurname() {return this.surname;}
+
+  public String getEmail() {return this.email;}
+
+  public Date getDate() {return this.date;}
+
+  public String getMessage() {return this.message;}
+
+  public long getID() {return this.id;}
+  
+  public void setFname(String fname) {this.fname = fname;}
+
+  public void setSurname(String surname) {this.surname = surname;}
+
+  public void setEmail(String email) {this.email = email;}
+
+  public void setDate(Date date) {this.date = date;}
+
+  public void setMessage(String message) {this.message = message;}
 }

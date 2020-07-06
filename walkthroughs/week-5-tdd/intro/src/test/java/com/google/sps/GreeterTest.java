@@ -30,4 +30,26 @@ public final class GreeterTest {
 
     Assert.assertEquals("Hello Ada", greeting);
   }
+
+  // Test if whitespace is trimmed from the name parameter.
+  @Test
+  public void testGreetingTrimsWhiteSpace() {
+    Greeter greeter = new Greeter();
+      
+    String greeting = greeter.greet("  Ada ");
+
+    // Whitespace should be trimmed.
+    Assert.assertEquals("Hello Ada", greeting);
+  }
+
+  // Test that inappropriate chars (@#$%)
+  @Test
+  public void testGreetingAppropriateChars() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("S#$oo-Y&eon");
+    
+    // Non-letter/hyphen characters should be removed.
+    Assert.assertEquals("Hello Soo-Yeon", greeting);
+  }
 }
