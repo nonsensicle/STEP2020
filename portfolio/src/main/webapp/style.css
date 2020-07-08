@@ -249,7 +249,7 @@ body {
 .formcontainer {
   border-radius: 5px;
   background-color: #500093;
-  padding: 10px;
+  padding: 20px;
   max-width: 50%;
   align-content: center;
   margin-left: auto;
@@ -257,9 +257,14 @@ body {
   color: white;
 }
 
+.formcontainer a {
+  padding: 20 px;
+  margin: 10 px;
+}
+
 input[type='text'],
 textarea {
-  width: 80%;
+  width: 95%;
   padding: 10px;
   margin: 10px;
   resize: vertical;
@@ -305,6 +310,27 @@ input[type='submit']:hover {
   color: white;
   font-weight: bold;
   font-size: 40px;
+  /* Let children, title and num comments display, float left bottom & right bot.*/
+  position: relative;
+}
+
+#headright {
+  font-weight: normal;
+  font-size: 20px;
+  color: white;
+  float: right;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+#headleft {
+  float: left;
+  color: white;
+  font-weight: bold;
+  font-size: 45px;
+  position: absolute;
+  bottom: 5px;
 }
 
 .comment {
@@ -316,6 +342,22 @@ input[type='submit']:hover {
   font-family: 'Gill Sans', sans-serif;
   text-decoration: none;
   color: white;
+}
+
+.delete {
+  padding: 10px;
+  align-content: center;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.delete button {
+  background-color: #500093;
+  padding: 15px;
+  color: white;
+  cursor: pointer;
+  align-content: center;
 }
 
 /* Thomas Hardy CV template http://www.thomashardy.me.uk/free-responsive-html-css3-cv-template */
