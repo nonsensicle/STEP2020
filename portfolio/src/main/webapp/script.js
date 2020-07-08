@@ -12,6 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** Fetches Blobstore upload URL from the appropriate servlet. */
+function fetchBlobstoreUploadURL() {
+    // Fetch the URL and apply to the "action" aspect of the comment form.
+    fetch("/blobstore-upload").then(promise => promise.text())
+        .then((imageUploadURL) => {
+          const commentForm = document.getElementById('comment-form');
+          commentForm.action = imageUploadURL;
+        });
+}
+
 /** 
  * Fetches stored comments from the server and display in the about UI.
  */
@@ -32,7 +42,7 @@ function getStoredComments() {
         for (i = 0; i < comments.length; i++) {
             curr = comments[i];
             displayList.appendChild(
-                createCommentElement(curr.fname, curr.surname, curr.date, curr.message));
+                createCommentElement(curr.fname, curr.surname, curr.date, curr.message, curr.imageURL));
 
             // If not the last comment, add a horizontal line afterward.
             if (i != comments.length - 1) {
@@ -48,7 +58,7 @@ function deleteAllComments() {
 }
 
 /** Creates a <div> element containing a comment. */
-function createCommentElement(fname, surname, date, message) {
+function createCommentElement(fname, surname, date, message, imageURL) {
   // Create the outer div and give it an ID.
   const commentElement = document.createElement("div");
   commentElement.id = "comment";
@@ -58,6 +68,16 @@ function createCommentElement(fname, surname, date, message) {
   paragraph.innerHTML = 
       "<h2>" + fname + " " + surname + " | " + date + "</h2><br>" + message;
   commentElement.appendChild(paragraph);
+  
+  // If there was an image included in the comment, put it under the comment.
+  // Must use "" rather than isEmpty(), since imageURL may not have an isEmpty() function.
+  if (!(imageURL == null || imageURL == "")) {
+    const img = document.createElement("img");
+    img.src = imageURL;
+    img.alt = "Comment picture."
+    img.style = "max-width: 40%;";
+    commentElement.appendChild(img);
+  }
 
   return commentElement;
 }

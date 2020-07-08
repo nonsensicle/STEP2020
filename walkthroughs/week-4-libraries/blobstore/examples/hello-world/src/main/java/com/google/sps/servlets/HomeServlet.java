@@ -41,6 +41,7 @@ public class HomeServlet extends HttpServlet {
     // Get the Blobstore URL
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     String uploadUrl = blobstoreService.createUploadUrl("/my-form-handler");
+    System.out.println(uploadUrl);
 
     response.setContentType("text/html");
 
