@@ -112,7 +112,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /** Return the number of comments user wants shown, or default.*/
-  public int getNumComments(HttpServletRequest request) {
+  private int getNumComments(HttpServletRequest request) {
     // Get the string input by the user in the num-comments field.
     String numString = request.getParameter("num-comments");
 
