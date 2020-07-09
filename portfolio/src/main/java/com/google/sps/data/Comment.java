@@ -27,17 +27,17 @@ public class Comment {
   @Expose
   private String message;
   @Expose 
-  private String imageURL;
+  private String blobKey;
   @Expose
   private final long id;  // Unique ID number for each entity from Datastore.
 
-  public Comment(String fname, String surname, String email, Date date, String message, String imageURL, long id) {
+  public Comment(String fname, String surname, String email, Date date, String message, String blobKey, long id) {
     this.fname = fname;
     this.surname = surname;
     this.email = email;
     this.date = date;
     this.message = message;
-    this.imageURL = imageURL;
+    this.blobKey = blobKey;
     this.id = id;
   }
 }

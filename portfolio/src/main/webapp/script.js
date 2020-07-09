@@ -42,7 +42,7 @@ function getStoredComments() {
         for (i = 0; i < comments.length; i++) {
             curr = comments[i];
             displayList.appendChild(
-                createCommentElement(curr.fname, curr.surname, curr.date, curr.message, curr.imageURL));
+                createCommentElement(curr.fname, curr.surname, curr.date, curr.message, curr.blobKey));
 
             // If not the last comment, add a horizontal line afterward.
             if (i != comments.length - 1) {
@@ -58,7 +58,7 @@ function deleteAllComments() {
 }
 
 /** Creates a <div> element containing a comment. */
-function createCommentElement(fname, surname, date, message, imageURL) {
+function createCommentElement(fname, surname, date, message, blobKey) {
   // Create the outer div and give it an ID.
   const commentElement = document.createElement("div");
   commentElement.id = "comment";
@@ -69,14 +69,24 @@ function createCommentElement(fname, surname, date, message, imageURL) {
       "<h2>" + fname + " " + surname + " | " + date + "</h2><br>" + message;
   commentElement.appendChild(paragraph);
   
+  // Make sure that, if a comment has a blob, it is returned.
+    
   // If there was an image included in the comment, put it under the comment.
   // Must use "" rather than isEmpty(), since imageURL may not have an isEmpty() function.
-  if (!(imageURL == null || imageURL == "")) {
-    const img = document.createElement("img");
-    img.src = imageURL;
-    img.alt = "Comment picture."
-    img.style = "max-width: 40%;";
-    commentElement.appendChild(img);
+  if (!(blobKey == null || blobKey == "")) {
+    // Fetch blob from GetBlobServlet.
+    blobUrlString = "/get-blob?blob-key=" + blobKey;
+    console.log(blobKey);
+    fetch(blobUrlString)
+        .then((image) => {
+          // Create an img element in the HTML document using the fetched image's URL.
+          const img = document.createElement("img");
+          img.src = image.url;
+          console.log(image.url);
+          img.alt = "Comment picture."
+          img.style = "max-width: 40%;";
+          commentElement.appendChild(img);
+        });
   }
 
   return commentElement;
