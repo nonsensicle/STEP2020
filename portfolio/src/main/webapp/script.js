@@ -92,6 +92,32 @@ function createCommentElement(fname, surname, date, message, blobKey) {
   return commentElement;
 }
 
+/** Resets file input on change if file was not an image. */
+function validateImage(fileInput) {
+  // Acceptable image extensions.
+  imgFileExtensions = [".jpg", ".jpeg", ".gif", ".png", ".bmp", ".svg", ".tiff", ".webp"];
+
+  if (fileInput.type == "file") {
+    fileName = fileInput.value;
+    fNameLength = fileName.length;
+    if (fNameLength > 0) {
+      isImage = false;   
+      // Loop thru extensions and change boolean to true if the file name equals any of them.
+      for (i = 0; i < imgFileExtensions.length; i++) {
+        extension = imgFileExtensions[i];
+        if (fileName.substring((fNameLength - extension.length), fNameLength).toLowerCase() === extension) {
+          isImage = true;
+        }
+      }
+    }
+  }
+  if (!isImage) {
+    alert("Invalid file type. Please submit an image.");
+    fileInput.value = "";
+  }
+  return isImage;
+}
+
 /*
  * Adds a random quote to the about page (about.html).
  */

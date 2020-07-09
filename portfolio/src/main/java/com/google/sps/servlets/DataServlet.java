@@ -53,7 +53,7 @@ public class DataServlet extends HttpServlet {
   private final String EMAIL = "email";
   private final String DATE = "date";
   private final String MESSAGE = "message";
-  private final String BLOBKEY = "blob-key";
+  private final String IMAGE_KEY = "image-key";
   private final int DEFAULT_NUM_COMMENTS = 10;
   private final int MAX_COMMENTS = 50;
 
@@ -89,14 +89,14 @@ public class DataServlet extends HttpServlet {
         String email = (String) entity.getProperty(EMAIL);
         Date date = (Date) entity.getProperty(DATE);
         String message = (String) entity.getProperty(MESSAGE);
-        String blobKey = (String) entity.getProperty(BLOBKEY);
+        String imageKey = (String) entity.getProperty(IMAGE_KEY);
         
         // If no names were entered, display "Anonymous".
         if ((fname == null && surname == null) || (fname.isEmpty() && surname.isEmpty()) ) {
            fname = "Anonymous";
         }
 
-        Comment comment = new Comment(fname, surname, email, date, message, blobKey, id);
+        Comment comment = new Comment(fname, surname, email, date, message, imageKey, id);
         comments.add(comment);
       }
       else { break;}
@@ -115,9 +115,9 @@ public class DataServlet extends HttpServlet {
     String email = request.getParameter("mail");
     String subject = request.getParameter("subject");
 
-    // Get the uploaded image URL from Blobstore.
+    // Get the blob key from Blobstore (if blob was submitted).
     // "image" is the name of the file input in the comment form.
-    String blobKey = getBlobKey(request, "image");
+    String imageKey = getImageKey(request, "image");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty(FNAME, fname);
@@ -125,7 +125,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(EMAIL, email);
     commentEntity.setProperty(DATE, new Date());
     commentEntity.setProperty(MESSAGE, subject);
-    commentEntity.setProperty(BLOBKEY, blobKey);
+    commentEntity.setProperty(IMAGE_KEY, imageKey);
 
     // Make an instance of DatastoreService and put comment entity in.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -162,7 +162,7 @@ public class DataServlet extends HttpServlet {
   /** Return the URL of the uploaded image (null if no upload or if not image). 
    * (Referenced FormHandlerServlet.java in hello-world-fetch.)
    */
-  private String getBlobKey(HttpServletRequest request, String formElementID) {
+  private String getImageKey(HttpServletRequest request, String formElementID) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     // Blobstore maps form element ID to a list of keys of the blobs uploaded by the form.
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
