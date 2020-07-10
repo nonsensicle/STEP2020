@@ -12,6 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** Fetches Blobstore upload URL from the appropriate servlet. */
+function fetchBlobstoreUploadURL() {
+    // Fetch the URL and apply to the "action" aspect of the comment form.
+    fetch("/blobstore-upload").then(promise => promise.text())
+        .then((imageUploadURL) => {
+          const commentForm = document.getElementById('comment-form');
+          commentForm.action = imageUploadURL;
+        });
+}
+
 /** 
  * Fetches stored comments from the server and display in the about UI.
  */
@@ -32,7 +42,7 @@ function getStoredComments() {
         for (i = 0; i < comments.length; i++) {
             curr = comments[i];
             displayList.appendChild(
-                createCommentElement(curr.fname, curr.surname, curr.date, curr.message));
+                createCommentElement(curr.fname, curr.surname, curr.date, curr.message, curr.blobKey));
 
             // If not the last comment, add a horizontal line afterward.
             if (i != comments.length - 1) {
@@ -48,7 +58,7 @@ function deleteAllComments() {
 }
 
 /** Creates a <div> element containing a comment. */
-function createCommentElement(fname, surname, date, message) {
+function createCommentElement(fname, surname, date, message, blobKey) {
   // Create the outer div and give it an ID.
   const commentElement = document.createElement("div");
   commentElement.id = "comment";
@@ -58,8 +68,55 @@ function createCommentElement(fname, surname, date, message) {
   paragraph.innerHTML = 
       "<h2>" + fname + " " + surname + " | " + date + "</h2><br>" + message;
   commentElement.appendChild(paragraph);
+  
+  // Make sure that, if a comment has a blob, it is returned.
+    
+  // If there was an image included in the comment, put it under the comment.
+  // Must use "" rather than isEmpty(), since imageURL may not have an isEmpty() function.
+  if (!(blobKey == null || blobKey == "")) {
+    // Fetch blob from GetBlobServlet.
+    blobUrlString = "/get-blob?blob-key=" + blobKey;
+    console.log(blobKey);
+    fetch(blobUrlString)
+        .then((image) => {
+          // Create an img element in the HTML document using the fetched image's URL.
+          const img = document.createElement("img");
+          img.src = image.url;
+          console.log(image.url);
+          img.alt = "Comment picture."
+          img.style = "max-width: 40%;";
+          commentElement.appendChild(img);
+        });
+  }
 
   return commentElement;
+}
+
+/** Resets file input on change if file was not an image. */
+function validateImage(fileInput) {
+  // Acceptable image extensions.
+  imgFileExtensions = [".jpg", ".jpeg", ".gif", ".png", ".bmp", ".svg", ".tiff", ".webp"];
+
+  if (fileInput.type == "file") {
+    fileName = fileInput.value;
+    fNameLength = fileName.length;
+    if (fNameLength > 0) {
+      isImage = false;   
+      fileNameLower = fileName.toLowerCase();
+      // Loop thru extensions and change boolean to true if the file name equals any of them.
+      for (extension of imgFileExtensions) {
+        if (fileNameLower.endsWith(extension)) {
+          isImage = true;
+          break;
+        }
+      }
+    }
+  }
+  if (!isImage) {
+    alert("Invalid file type. Please submit an image.");
+    fileInput.value = "";
+  }
+  return isImage;
 }
 
 /*

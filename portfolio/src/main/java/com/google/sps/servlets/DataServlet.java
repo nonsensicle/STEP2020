@@ -15,22 +15,34 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.Comment;
-import com.google.gson.*;
-import com.google.gson.annotations.*;
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
+import com.google.gson.*;
+import com.google.gson.annotations.*;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.*;
+import java.util.List;
+import java.util.Map;
 
 /** Servlet that returns comments.*/
 @WebServlet("/data")
@@ -41,6 +53,7 @@ public class DataServlet extends HttpServlet {
   private final String EMAIL = "email";
   private final String DATE = "date";
   private final String MESSAGE = "message";
+  private final String IMAGE_KEY = "image-key";
   private final int DEFAULT_NUM_COMMENTS = 10;
   private final int MAX_COMMENTS = 50;
 
@@ -76,8 +89,14 @@ public class DataServlet extends HttpServlet {
         String email = (String) entity.getProperty(EMAIL);
         Date date = (Date) entity.getProperty(DATE);
         String message = (String) entity.getProperty(MESSAGE);
+        String imageKey = (String) entity.getProperty(IMAGE_KEY);
+        
+        // If no names were entered, display "Anonymous".
+        if ((fname == null && surname == null) || (fname.isEmpty() && surname.isEmpty()) ) {
+           fname = "Anonymous";
+        }
 
-        Comment comment = new Comment(fname, surname, email, date, message, id);
+        Comment comment = new Comment(fname, surname, email, date, message, imageKey, id);
         comments.add(comment);
       }
       else { break;}
@@ -96,12 +115,17 @@ public class DataServlet extends HttpServlet {
     String email = request.getParameter("mail");
     String subject = request.getParameter("subject");
 
+    // Get the blob key from Blobstore (if blob was submitted).
+    // "image" is the name of the file input in the comment form.
+    String imageKey = getImageKey(request, "image");
+
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty(FNAME, fname);
     commentEntity.setProperty(SURNAME, surname);
     commentEntity.setProperty(EMAIL, email);
     commentEntity.setProperty(DATE, new Date());
     commentEntity.setProperty(MESSAGE, subject);
+    commentEntity.setProperty(IMAGE_KEY, imageKey);
 
     // Make an instance of DatastoreService and put comment entity in.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -133,6 +157,45 @@ public class DataServlet extends HttpServlet {
     }
 
     return numComments;
+  }
+
+  /** Return the URL of the uploaded image (null if no upload or if not image). 
+   * (Referenced FormHandlerServlet.java in hello-world-fetch.)
+   */
+  private String getImageKey(HttpServletRequest request, String formElementID) {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    // Blobstore maps form element ID to a list of keys of the blobs uploaded by the form.
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get(formElementID);
+
+    // User submitted form without file selected, so no blobKey.
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Form only allowed for one Blob input, so get first blobkey.
+    BlobKey blobKey = blobKeys.get(0);
+    
+    // User submitted form with no file, but an empty key was created--delete it.
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+
+    // Check to make sure the file uploaded was an image.
+    // If the first five letters of the type are not "image," then return null and delete Blob from storage.
+    String fileType = blobInfo.getContentType();
+    // System.out.println(fileType);
+    if (!fileType.substring(0,5).equals("image")) {
+      blobstoreService.delete(blobKey);
+      System.err.println("File uploaded was not an image");
+      return null;
+    }
+    
+    // In previous versions, ImagesServices was used to get a URL pointing to the uploaded img.
+    // Here, we simpy return the Blob's key so that it can later be served directly.
+    return blobKey.getKeyString();
   }
 
   /*

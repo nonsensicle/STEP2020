@@ -1,38 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>LEAH RYU: CONTACT</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js"></script>
   </head>
-  <body onload="getStoredComments()">
+  <body onload="fetchBlobstoreUploadURL(); getStoredComments();">
     <div class="header">
-      <a href="index.html" class="clickablelogo" style="width:17%;"><img src="images/leahheader.svg" style="width:100%;"></a>
-      <img src="images/artcs.svg" width="12%" style="position:fixed; top:6%; left:20%">
+      <a href="index.html" class="clickablelogo" style="width: 17%;"
+        ><img src="images/leahheader.svg" style="width: 100%;"
+      /></a>
+      <img src="images/artcs.svg" width="12%" style="position: fixed; top: 6%; left: 20%;" />
       <div class="header-right">
         <a href="about.html">About</a>
         <a href="prints.html">Art Gallery</a>
         <a class="activeheader" href="contact.html">Contact</a>
       </div>
     </div>
-    
-    <div class="title-contact" style="margin-top:10%;">
-        <h1>LEAVE A COMMENT</h1>
+
+    <div class="title-contact" style="margin-top: 10%;">
+      <h1>LEAVE A COMMENT</h1>
     </div>
-    
+
     <!-- Contact form -->
-    <!-- TODO: back-end mail -->
     <div class="formcontainer">
-      <form action="/data" method="POST">
-        <label for="fname">Name</label> <br>
-        <input style="width:40%;" type="text" id="fname" name="first" placeholder="Your name"> 
-        <input style="width:40%;" type="text" id="surname" name="last" placeholder="Your last name"></p> <br>
-        <label for="email">Email</label> <br>
-        <input type="text" id="email" name="mail" placeholder="Your email"> <br>
-        <label for="msg">Message *</label> <br>
-        <textarea id="subject" name="subject" placeholder="Tell me something.." style="height:200px"></textarea><br>
-        <input type="submit" value="Submit">
+      <form id="comment-form" action="/data" method="POST" enctype="multipart/form-data">
+        <label for="first">Name</label> <br />
+        <p>
+          <input style="width: 47%;" type="text" id="fname" name="first" placeholder="Your name" />
+          <input style="width: 47%;" type="text" id="surname" name="last" placeholder="Your last name" />
+        </p>
+        <br />
+        <label for="mail">Email</label>
+        <input type="text" id="email" name="mail" placeholder="Your email" />
+        <label for="subject">Message *</label>
+        <textarea id="subject" name="subject" placeholder="Tell me something.." style="height: 200px;"></textarea><br />
+        <label for="image">Upload an image</label> <br />
+        <input type="file" name="image" id="file" onchange="validateImage(this);"/> <br /><br />
+        <input type="submit" value="Submit" />
       </form>
     </div>
 
@@ -45,18 +51,21 @@
     </div>
 
     <div class="title-contact">
-      <h2 style="float:left;">COMMENTS:</h2>
-      <p style="float:right; font-weight:normal; font-size: 20px;">Number of comments to display: 
-      <select name="num-comments" id="numcom" value="10" onchange="getStoredComments()">
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-      </select></p>
+      <p id="headleft">COMMENTS:</p>
+      <p id="headright">
+        Number of comments to display:
+        <select name="num-comments" id="numcom" value="10" onchange="getStoredComments()">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </p>
     </div>
 
-    <div id="comments-container" class="comment" style="color: white;"></div>
-    <button style="align-content:center;" class="formcontainer" 
-    onclick="deleteAllComments()">Delete All Comments</button>
+    <div id="comments-container" class="comment"></div>
+    <div class="delete">
+      <button onclick="deleteAllComments()">Delete All Comments</button>
+    </div>
   </body>
 </html>
