@@ -102,11 +102,12 @@ function validateImage(fileInput) {
     fNameLength = fileName.length;
     if (fNameLength > 0) {
       isImage = false;   
+      fileNameLower = fileName.toLowerCase();
       // Loop thru extensions and change boolean to true if the file name equals any of them.
-      for (i = 0; i < imgFileExtensions.length; i++) {
-        extension = imgFileExtensions[i];
-        if (fileName.substring((fNameLength - extension.length), fNameLength).toLowerCase() === extension) {
+      for (extension of imgFileExtensions) {
+        if (fileNameLower.endsWith(extension)) {
           isImage = true;
+          break;
         }
       }
     }
