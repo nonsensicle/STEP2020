@@ -42,7 +42,8 @@ function getStoredComments() {
         for (i = 0; i < comments.length; i++) {
             curr = comments[i];
             displayList.appendChild(
-                createCommentElement(curr.fname, curr.surname, curr.date, curr.message, curr.blobKey));
+                createCommentElement(curr.fname, curr.surname, curr.date, curr.message, curr.blobKey, 
+                    curr.imageDescriptions, curr.descScores, curr.objectNames, curr.objectScores));
 
             // If not the last comment, add a horizontal line afterward.
             if (i != comments.length - 1) {
@@ -58,7 +59,8 @@ function deleteAllComments() {
 }
 
 /** Creates a <div> element containing a comment. */
-function createCommentElement(fname, surname, date, message, blobKey) {
+function createCommentElement(fname, surname, date, message, blobKey, imageDescs, descScores,
+    objects, objScores) {
   // Create the outer div and give it an ID.
   const commentElement = document.createElement("div");
   commentElement.id = "comment";
@@ -76,16 +78,75 @@ function createCommentElement(fname, surname, date, message, blobKey) {
   if (!(blobKey == null || blobKey == "")) {
     // Fetch blob from GetBlobServlet.
     blobUrlString = "/get-blob?blob-key=" + blobKey;
-    console.log(blobKey);
     fetch(blobUrlString)
         .then((image) => {
-          // Create an img element in the HTML document using the fetched image's URL.
+          // Create a slider box element in the HTML doc using the fetched img's URL.
+          const slider = document.createElement("div");
+          slider.className = "slider";
+          commentElement.appendChild(slider);
+
+          // Create img elements for each slide in the HTML document using the fetched image's URL.
           const img = document.createElement("img");
           img.src = image.url;
-          console.log(image.url);
           img.alt = "Comment picture."
-          img.style = "max-width: 40%;";
-          commentElement.appendChild(img);
+          const img2 = document.createElement("img");
+          img2.src = image.url;
+          img2.alt = "Comment picture."
+
+          // Create slide showing img and a table displaying image labels and confidence scores.
+          sliderBox1 = document.createElement("div");  // For image labels
+          sliderBox1.className = "slide";
+          sliderBox1.appendChild(img);
+          table = document.createElement("table");
+          
+          // Building header row.
+          tableHeader = document.createElement("thead");
+          headerLabels = document.createElement("tr");
+          headerLabels.innerHTML = "<th>Image Label</th><th>Confidence</th>"
+          tableHeader.appendChild(headerLabels);
+          table.appendChild(tableHeader);
+ 
+          // Building body rows. 
+          tableBody = document.createElement("tbody");
+          for (i = 0; i < imageDescs.length; i++) {
+            row = document.createElement("tr");
+            roundedScore = descScores[i].toFixed(3);
+            row.innerHTML = "<td>" + imageDescs[i] + "</td><td>" + roundedScore + "</td>";
+            tableBody.appendChild(row); 
+          }
+          table.appendChild(tableBody);
+          sliderBox1.appendChild(table);
+
+
+         // Create slide showing object detection info.
+          sliderBox2 = document.createElement("div"); 
+          sliderBox2.className = "slide";
+          sliderBox2.appendChild(img2);
+          table = document.createElement("table");
+          
+          // Building header row.
+          tableHeader = document.createElement("thead");
+          headerLabels = document.createElement("tr");
+          headerLabels.innerHTML = "<th>Object</th><th>Confidence</th>"
+          tableHeader.appendChild(headerLabels);
+          table.appendChild(tableHeader);
+
+          // If objects wasn't empty/null, then populate the body rows.
+          if (!(objects == null || objects == "")) {
+            // Building body rows. 
+            tableBody = document.createElement("tbody");
+            for (i = 0; i < objects.length; i++) {
+              row = document.createElement("tr");
+              roundedScore = objScores[i].toFixed(3);
+              row.innerHTML = "<td>" + objects[i] + "</td><td>" + roundedScore + "</td>";
+              tableBody.appendChild(row); 
+            }
+            table.appendChild(tableBody);
+          }
+          sliderBox2.appendChild(table);
+
+          slider.appendChild(sliderBox1);
+          slider.appendChild(sliderBox2);
         });
   }
 
