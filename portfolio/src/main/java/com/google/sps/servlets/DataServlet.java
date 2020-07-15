@@ -29,15 +29,30 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
+import com.google.api.gax.rpc.ApiException;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.BoundingPoly;
+import com.google.cloud.vision.v1.EntityAnnotation;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.LocalizedObjectAnnotation;
+import com.google.cloud.vision.v1.NormalizedVertex;
+import com.google.protobuf.ByteString;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.*;
@@ -54,12 +69,17 @@ public class DataServlet extends HttpServlet {
   private final String DATE = "date";
   private final String MESSAGE = "message";
   private final String IMAGE_KEY = "image-key";
+  private final String IMAGE_LABELS = "image-labels";
+  private final String LABEL_SCORES = "label-scores";
+  private final String OBJECT_NAMES = "obj-names";
+  private final String OBJECT_SCORES = "obj-scores";
   private final int DEFAULT_NUM_COMMENTS = 10;
   private final int MAX_COMMENTS = 50;
 
   // For logs.
   private final Logger logger = Logger.getLogger(DataServlet.class.getName());
 
+  // TODO: refactor (send building of comment to a different function)
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Query for Comment Entities in this instance of Datastore.
@@ -90,13 +110,17 @@ public class DataServlet extends HttpServlet {
         Date date = (Date) entity.getProperty(DATE);
         String message = (String) entity.getProperty(MESSAGE);
         String imageKey = (String) entity.getProperty(IMAGE_KEY);
+        ArrayList<String> labels = (ArrayList) entity.getProperty(IMAGE_LABELS);
+        ArrayList<Float> scores = (ArrayList) entity.getProperty(LABEL_SCORES);
+        ArrayList<String> objects = (ArrayList) entity.getProperty(OBJECT_NAMES);
+        ArrayList<Float> objScores = (ArrayList) entity.getProperty(OBJECT_SCORES);
         
         // If no names were entered, display "Anonymous".
         if ((fname == null && surname == null) || (fname.isEmpty() && surname.isEmpty()) ) {
            fname = "Anonymous";
         }
 
-        Comment comment = new Comment(fname, surname, email, date, message, imageKey, id);
+        Comment comment = new Comment(fname, surname, email, date, message, imageKey, labels, scores, objects, objScores, id);
         comments.add(comment);
       }
       else { break;}
@@ -117,7 +141,42 @@ public class DataServlet extends HttpServlet {
 
     // Get the blob key from Blobstore (if blob was submitted).
     // "image" is the name of the file input in the comment form.
-    String imageKey = getImageKey(request, "image");
+    BlobKey imageKey = getImageKey(request, "image");
+   
+    // Use one annotate image request to get the labels associated with and the objects
+    // detected in the image uploaded by the user, if there was one.
+    // Also, create a string from the image key if there was an image.
+    ArrayList<String> labels = new ArrayList<String>();
+    ArrayList<Float> labelScores = new ArrayList<Float>();
+    ArrayList<String> objects = new ArrayList<String>();
+    ArrayList<Float> objScores = new ArrayList<Float>();
+    String imKey = "";
+
+    if (imageKey != null) { 
+      // Create string from key to store in datastore.
+      imKey = imageKey.getKeyString(); 
+
+      byte[] imageBytes = getBlobBytes(imageKey);
+      List<LocalizedObjectAnnotation> imageObjects = getImageObjects(imageBytes);
+      List<EntityAnnotation> imageLabels = getImageLabels(imageBytes);
+      
+      // Build the lists of image descriptions and scores.
+      if (imageLabels != null ) {
+        for (EntityAnnotation label: imageLabels) {
+          labels.add(label.getDescription());
+          labelScores.add(label.getScore());
+        }
+      } 
+      
+      if (imageObjects != null) {
+        // Build the lists of image objects, scores, and bounding box vertices.
+        for (LocalizedObjectAnnotation object: imageObjects) {
+          objects.add(object.getName());
+          objScores.add(object.getScore());
+        }
+      }
+      
+    }
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty(FNAME, fname);
@@ -125,7 +184,12 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(EMAIL, email);
     commentEntity.setProperty(DATE, new Date());
     commentEntity.setProperty(MESSAGE, subject);
-    commentEntity.setProperty(IMAGE_KEY, imageKey);
+    commentEntity.setProperty(IMAGE_KEY, imKey);
+    
+    commentEntity.setProperty(IMAGE_LABELS, labels);  
+    commentEntity.setProperty(LABEL_SCORES, labelScores); 
+    commentEntity.setProperty(OBJECT_NAMES, objects);
+    commentEntity.setProperty(OBJECT_SCORES, objScores);
 
     // Make an instance of DatastoreService and put comment entity in.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -159,10 +223,10 @@ public class DataServlet extends HttpServlet {
     return numComments;
   }
 
-  /** Return the URL of the uploaded image (null if no upload or if not image). 
+  /** Return the key of the uploaded image (null if no upload or if not image). 
    * (Referenced FormHandlerServlet.java in hello-world-fetch.)
    */
-  private String getImageKey(HttpServletRequest request, String formElementID) {
+  private BlobKey getImageKey(HttpServletRequest request, String formElementID) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     // Blobstore maps form element ID to a list of keys of the blobs uploaded by the form.
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
@@ -195,7 +259,94 @@ public class DataServlet extends HttpServlet {
     
     // In previous versions, ImagesServices was used to get a URL pointing to the uploaded img.
     // Here, we simpy return the Blob's key so that it can later be served directly.
-    return blobKey.getKeyString();
+    return blobKey;
+  }
+
+  /** 
+   * Blobstore stores files as binary data; this func retrieves the data stored at imageKey. 
+   * (See image-analysis directory example)
+   */
+  private byte[] getBlobBytes(BlobKey imageKey) throws IOException {
+    BlobstoreService bs = BlobstoreServiceFactory.getBlobstoreService();
+    ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
+
+    int fetchSize = BlobstoreService.MAX_BLOB_FETCH_SIZE;
+    long currByteIndex = 0;
+    int bytesLength = 0;
+    do {
+      // Fetch a portion of the image bytes from Blobstore.
+      byte[] temp = bs.fetchData(imageKey, currByteIndex, currByteIndex + fetchSize - 1); 
+      bytesLength = temp.length;
+      outputBytes.write(temp);
+
+      currByteIndex += fetchSize;
+    } while(bytesLength >= fetchSize);  // If fewer bytes than requested are read, then the end was reached.
+    return outputBytes.toByteArray();
+  }
+
+
+  /** 
+   * Uses Cloud Vision API to generate a list of objects for the image
+   * represented by the binary data stored in the imgBytes param.
+   */
+  private List<LocalizedObjectAnnotation> getImageObjects(byte[] imageBytes) throws IOException {
+    ByteString byteString = ByteString.copyFrom(imageBytes);
+    Image image = Image.newBuilder().setContent(byteString).build();
+
+    // Use a Feature to make an annotate-image request; add this request to a list of such.
+    Feature feature = Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION).build();
+    AnnotateImageRequest request = 
+        AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
+    List<AnnotateImageRequest> requests = new ArrayList<>();
+    requests.add(request);
+
+    // Batch annotate all the image requests in the list (only one, here) and get the responses.
+    try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+      BatchAnnotateImagesResponse batchResponse = client.batchAnnotateImages(requests);
+      AnnotateImageResponse imageResponse = batchResponse.getResponsesList().get(0);
+ 
+      if (imageResponse.hasError()) {
+        System.err.println("Error getting img response: " + imageResponse.getError().getMessage());
+        return null;
+      }
+      return imageResponse.getLocalizedObjectAnnotationsList();
+    }
+    catch (ApiException ae) {
+      System.err.println("Error: " + ae);
+      return null;
+    }
+  }
+
+  /** 
+   * Uses Cloud Vision API to generate a list of labels for the image
+   * represented by the binary data stored in the imgBytes param.
+   */
+  private List<EntityAnnotation> getImageLabels(byte[] imageBytes) throws IOException {
+    ByteString byteString = ByteString.copyFrom(imageBytes);
+    Image image = Image.newBuilder().setContent(byteString).build();
+
+    // Use a Feature to make an annotate-image request; add this request to a list of such.
+    Feature feature = Feature.newBuilder().setType(Feature.Type.LABEL_DETECTION).build();
+    AnnotateImageRequest request = 
+        AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
+    List<AnnotateImageRequest> requests = new ArrayList<>();
+    requests.add(request);
+
+    // Batch annotate all the image requests in the list (only one, here) and get the responses.
+    try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+      BatchAnnotateImagesResponse batchResponse = client.batchAnnotateImages(requests);
+      AnnotateImageResponse imageResponse = batchResponse.getResponsesList().get(0);
+ 
+      if (imageResponse.hasError()) {
+        System.err.println("Error getting img response: " + imageResponse.getError().getMessage());
+        return null;
+      }
+      return imageResponse.getLabelAnnotationsList();
+    }
+    catch (ApiException ae) {
+      System.err.println("Error: " + ae);
+      return null;
+    }
   }
 
   /*
