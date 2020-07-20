@@ -22,6 +22,18 @@ public class Greeter {
    * Returns a greeting for the given name.
    */
   public String greet(String name) {
-    return "Hello " + name;
+    // Remove leading and trailing whitespaces.
+    String nameTrimmed = name.trim();
+
+    // Remove inappropriate (non letter, space or hyphen) characters.
+    StringBuilder nameProper = new StringBuilder();
+    for (int i = 0; i < nameTrimmed.length(); i++) {
+      char curr = nameTrimmed.charAt(i);
+      if (Character.isLetter(curr) || curr == '-' || curr == ' ') {
+        nameProper.append(curr);
+      }  
+    }
+
+    return "Hello " + nameProper.toString();
   }
 }
