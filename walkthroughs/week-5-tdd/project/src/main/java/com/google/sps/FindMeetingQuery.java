@@ -104,12 +104,15 @@ public Collection<TimeRange> queryHelper(Collection<Event> events, Collection<St
 
       // If the current event overlaps the next event, it either contains the entire next event or its start.
       // Therefore, update only the end time as needed.
+      // The proposed new end time must be greater than the current one.
       if (currEvent.overlaps(nextEvent)) {
-        if (currEvent.contains(nextEvent)) {
-          currEndTime = currEvent.end();
+        int currEventEnd = currEvent.end();
+        int nextEventEnd = nextEvent.end();
+        if (currEvent.contains(nextEvent) && currEventEnd > currEndTime) {
+          currEndTime = currEventEnd;
         }
-        else {         // Next event ends after this event ends.
-          currEndTime = nextEvent.end();
+        else if (nextEventEnd > currEndTime) {     // Next event ends after this event ends.
+          currEndTime = nextEventEnd;
         }
       }
       // Else, we may have a new time range to add to available times.
@@ -124,12 +127,13 @@ public Collection<TimeRange> queryHelper(Collection<Event> events, Collection<St
     
     // Add the range from the end of the last meeting of the day to the end of the day if enough time exists.
     int lastEventEnd = takenTimes.get(currEventIndex).end();
-    // If, for example, the event with the penultimate start time contained the "last event" by start time, need to consider the penultimate meeting's end.
+    // If, for example, the event with the penultimate start time contained the "last event" by start time, 
+    // need to consider the penultimate meeting's end.
     if (currEndTime > lastEventEnd) {
       lastEventEnd = currEndTime;
     }
     if ((TimeRange.END_OF_DAY - lastEventEnd + 1) >= duration) {
-      validTimes.add(TimeRange.fromStartDuration(lastEventEnd, (TimeRange.END_OF_DAY - lastEventEnd + 1)));
+      validTimes.add(TimeRange.fromStartEnd(lastEventEnd, TimeRange.END_OF_DAY, true));
     }
 
     return validTimes;
