@@ -105,7 +105,7 @@ public Collection<TimeRange> queryHelper(Collection<Event> events, Collection<St
       // If the current event overlaps the next event, it either contains the entire next event or its start.
       // Therefore, update only the end time as needed.
       // The proposed new end time must be greater than the current one.
-      if (currEvent.overlaps(nextEvent)) {
+      if (currEvent.overlaps(nextEvent) || currEndTime >= nextEvent.start()) { 
         int currEventEnd = currEvent.end();
         int nextEventEnd = nextEvent.end();
         if (currEvent.contains(nextEvent) && currEventEnd > currEndTime) {
