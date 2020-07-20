@@ -96,12 +96,24 @@ public class DataServlet extends HttpServlet {
       return;
     }
 
+    // Create a list of Comments to be returned as JSON.
+    ArrayList<Comment> comments = makeCommentList(results, maxComments);
+
+    // Send back a JSON object.
+    String jsonString = new Gson().toJson(comments);  // Gson method takes private vars in each comment
+    response.setContentType("application/json;");
+    response.getWriter().println(jsonString);
+  }
+  
+  /** Helper method for doGet() that builds a list of Comments based on a prepared query and a max number of comments. */
+  public ArrayList<Comment> makeCommentList(PreparedQuery commentEntities, int numComments) {
+
     // Loop through found Comment Entities and add then to an arraylist of comments.
     // Limit amount of comments displayed to user's choice.
     ArrayList<Comment> comments = new ArrayList<Comment>();
     int commentCounter = 0;
-    for (Entity entity: results.asIterable()) {
-      if (commentCounter < maxComments) {
+    for (Entity entity: commentEntities.asIterable()) {
+      if (commentCounter < numComments) {
         commentCounter ++;
         long id = entity.getKey().getId();
         String fname = (String) entity.getProperty(FNAME);
@@ -125,11 +137,7 @@ public class DataServlet extends HttpServlet {
       }
       else { break;}
     }
-
-    // Send back a JSON object.
-    String jsonString = new Gson().toJson(comments);  // Gson method takes private vars in each comment
-    response.setContentType("application/json;");
-    response.getWriter().println(jsonString);
+    return comments;
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
@@ -175,9 +183,23 @@ public class DataServlet extends HttpServlet {
           objScores.add(object.getScore());
         }
       }
-      
     }
 
+    Entity commentEntity = makeCommentEntity(fname, surname, email, subject, imKey, labels, 
+        labelScores, objects, objScores);
+
+    // Make an instance of DatastoreService and put comment entity in.
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/contact.html");
+  }
+
+  /** doPost() helper method; makes a Comment Entity with given parameters. */
+  public Entity makeCommentEntity(String fname, String surname, String email, String subject, String imKey,
+      ArrayList<String> labels, ArrayList<Float> labelScores, ArrayList<String> objects, ArrayList<Float> objScores) {
+    
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty(FNAME, fname);
     commentEntity.setProperty(SURNAME, surname);
@@ -191,12 +213,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(OBJECT_NAMES, objects);
     commentEntity.setProperty(OBJECT_SCORES, objScores);
 
-    // Make an instance of DatastoreService and put comment entity in.
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
-
-    // Redirect back to the HTML page.
-    response.sendRedirect("/contact.html");
+    return commentEntity;
   }
 
   /** Return the number of comments user wants shown, or default.*/
